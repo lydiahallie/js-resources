@@ -1,0 +1,16 @@
+h1 {
+  margin: 0;
+  color: white;
+  font-family: 'Source Sans Pro', sans-serif;
+  font-size: 25px;
+}
+
+.courses-wrapper {
+  position: absolute;
+  top: 500px;
+  color: white;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

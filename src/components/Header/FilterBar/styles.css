@@ -1,0 +1,29 @@
+.filterbar-wrapper {
+  background: rgba(0, 0, 0, 0.3);
+  width: 800px;
+  height: 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 10px;
+}
+
+h3 {
+  color: white;
+  font-family: 'Source Sans Pro', sans-serif;
+  font-size: 25px;
+}
+
+select {
+  background-color: rgba(0, 0, 0, 0.3);
+  color: white;
+  padding: 10px;
+  width: 200px;
+  height: 50px;
+  border-radius: 50% !important;
+  font-size: 20px;
+  font-weight: lighter;
+  margin: 0 20px;
+}
