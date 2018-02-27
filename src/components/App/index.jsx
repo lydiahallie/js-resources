@@ -6,33 +6,22 @@ import Header from '../Header';
 import FilterPane from '../FilterPane';
 import filter from 'lodash/filter';
 import includes from 'lodash/includes';
-import { COURSES } from '../../data/courses'
+import { COURSES } from '../../data/courses';
+import { Autocomplete } from 'react-materialize';
 
-const MenuBar = () => (
+const MenuBar = ({updateSearch, dataSource }) => (
   <div className="menubar-wrapper">
     <div className="logo">
       <h1>JavaScript Resources</h1>
     </div>
     <div className='menubar-btns'>
-      <div className='menubar-btn'>
-        All
-      </div>
-      <div className='menubar-btn'>
-        React
-      </div>
-      <div className='menubar-btn'>
-        Angular
-      </div>
+      <Autocomplete
+        data={dataSource.source}
+	    />
     </div>
     <div className='menubar-add'>
       Add A Resource
     </div>
-  </div>
-)
-
-const SearchBar = () => (
-  <div className='searchbar-wrapper'>
-    <input type="text" placeholder="Search.." />
   </div>
 )
 
@@ -45,6 +34,8 @@ export default class App extends Component {
       types: [],
       lengthValue: { min: 0, max: 100 },
       priceValue:  { min: 0, max: 500 },
+      searchValue: '',
+      dataSource: {},
     }
   }
 
@@ -64,15 +55,27 @@ export default class App extends Component {
     }
   }
 
+  componentDidMount() {
+    let source = {};
+    COURSES.map((course) => {
+      source[`${course.name}`] = course.img;
+      this.setState({ dataSource: {...this.state.dataSource, source} })
+    })
+  }
+
   changeRangeValue = (name, value) => {
     this.setState({ [name]: value })
+  }
+
+  updateSearch = (event) => {
+    this.setState({ searchValue: event.target.value });
   }
 
   render() {
     console.log("this state", this.state)
     return (
       <div className='app'>
-        <MenuBar />
+        <MenuBar dataSource={ this.state.dataSource } updateSearch={this.updateSearch} />
         <div className='app-content'>
           <FilterPane 
             levels={ this.state.levels } 
