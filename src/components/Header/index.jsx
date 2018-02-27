@@ -10,7 +10,7 @@ export default class Header extends Component {
   render() {
     return (
       <div className='header'>
-        <FilterBar />
+        {/* <FilterBar onInputChange={this.props.onInputChange} /> */}
       </div>
     )
   }
