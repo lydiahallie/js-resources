@@ -40,14 +40,14 @@ export default class FilterPane extends Component {
   }
 
   render() {
-    const height = this.state.expanded ? '300px' : '20px';
+    const height = this.state.expanded ? '300px' : '30px';
     const style = {
       height,
     }
 
     return (
       <div className='filterpane-wrapper' style={style}>
-        { this.state.expanded && <div className='filter-columns'>
+        { this.state.expanded ? <div className='filter-columns'>
           <div className='filter-column'>
             <h6>Level</h6>
             <form onSubmit={this.handleFormSubmit}>
@@ -82,8 +82,9 @@ export default class FilterPane extends Component {
               value={this.props.priceValue}
               onChange={value => this.props.changeRangeValue('priceValue', value)} />
           </div>
-        </div> }
-        <i className='expand-btn' onClick={this.toggleFilterPane}>
+        </div> : 
+        <h5>Expand the filter pane to filter through resources</h5> }
+        <i className={`expand-btn expanded-${this.state.expanded}`} onClick={this.toggleFilterPane}>
           <Icon small>{ this.state.expanded ? 'expand_less' : 'expand_more' }</Icon>
         </i>
       </div>

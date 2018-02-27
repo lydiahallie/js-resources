@@ -17,6 +17,7 @@ const MenuBar = ({updateSearch, dataSource }) => (
     <div className='menubar-btns'>
       <Autocomplete
         data={dataSource.source}
+        onChange={updateSearch}
 	    />
     </div>
     <div className='menubar-add'>
@@ -72,7 +73,6 @@ export default class App extends Component {
   }
 
   render() {
-    console.log("this state", this.state)
     return (
       <div className='app'>
         <MenuBar dataSource={ this.state.dataSource } updateSearch={this.updateSearch} />

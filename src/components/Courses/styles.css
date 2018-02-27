@@ -101,7 +101,10 @@ h1 {
   font-family: 'Lato', sans-serif;
   font-weight: 900;
   font-size: 13px;
+  letter-spacing: 0.7px;
   border: none;
+  color: #afa967;
+  width: 100%;
 }
 
 .course-info-box {

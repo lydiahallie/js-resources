@@ -128,8 +128,12 @@ body {
 }
 
 .filterpane-wrapper {
-  background: rgba(0, 0, 0, 0.07);
+  background: #E3E3E3;
   height: 300px;
+  display: -webkit-box; 
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex; 
   display: flex;
   justify-content: center;
   -webkit-box-align: center;
@@ -143,6 +147,12 @@ body {
   height: calc(100vh - 60px);
   overflow-y: scroll;
   overflow-x: hidden;
+  display: -webkit-box; 
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex; 
+  display: flex;
+  flex-direction: column;
 }
 
 .autocomplete {
