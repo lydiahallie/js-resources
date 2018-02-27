@@ -1,3 +1,30 @@
 .filterpane-wrapper {
   transition: .5s;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+}
+
+.filter-columns {
+  display: flex;
+  margin-top: 40px;
+  transition: .5s;
+}
+
+.filter-column {
+  height: 200px;
+  width: 250px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.input-range__track--active, .input-range__slider {
+  background: black !important;
+}
+
+.input-range__slider {
+  border-color: black !important;
 }

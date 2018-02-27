@@ -2,6 +2,12 @@ import React, { Component } from 'react';
 import './styles.css';
 import { COURSES } from '../../data/courses';
 
+const filterPaneOptions = {
+  levels: ['Beginner', 'Intermediate', 'Advanced'],
+  frameworks: ['None', 'React', 'Angular', 'Vue'],
+  type: ['Online', 'Book', 'Podcast'],
+};
+
 const Course = ({course}) => (
   <div className='course-wrapper'>
     <div className='thumbnail'>
@@ -30,11 +36,32 @@ const Course = ({course}) => (
 
 export default class Courses extends Component {
   render() {
+    const filterPredicates = this.props.preferences;
+    const levels = filterPredicates.levels.length > 0 ? filterPredicates.levels : filterPaneOptions.levels;
+    const types = filterPredicates.types.length > 0 ? filterPredicates.types : filterPaneOptions.type;
+    const frameworks = filterPredicates.frameworks.length > 0 ? filterPredicates.frameworks : filterPaneOptions.frameworks;
+    const minLength = filterPredicates.lengthValue.min;
+    const maxLength = filterPredicates.lengthValue.max;
+    const minPrice = filterPredicates.priceValue.min;
+    const maxPrice = filterPredicates.priceValue.max;
+    console.log('minPrice', filterPredicates.priceValue);
+    const filteredCourses = COURSES.filter(course => {
+      if (levels.includes(course.level) &&
+          types.includes(course.type) &&
+          frameworks.includes(course.framework) &&
+          minPrice <= course.price &&
+          maxPrice >= course.price &&
+          minLength <= course.length &&
+          maxLength >= course.length) return course;
+    })
+
+    console.log('COURSES', COURSES);
+    console.log("filtered courses", filteredCourses);
     return (
       <div className='courses-wrapper'>
         <h1>Courses</h1>
         <div className='courses-list'>
-          { COURSES.map((course) => (
+          { filteredCourses.map((course) => (
             <Course course={course}/>
           )) }
         </div>

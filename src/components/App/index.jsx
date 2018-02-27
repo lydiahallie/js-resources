@@ -4,6 +4,9 @@ import './styles.css';
 import Courses from '../Courses';
 import Header from '../Header';
 import FilterPane from '../FilterPane';
+import filter from 'lodash/filter';
+import includes from 'lodash/includes';
+import { COURSES } from '../../data/courses'
 
 const MenuBar = () => (
   <div className="menubar-wrapper">
@@ -37,23 +40,50 @@ export default class App extends Component {
   constructor() {
     super();
     this.state = {
-      level: null,
-      price: null,
-      length: null,
+      levels: [],
+      frameworks: [],
+      types: [],
+      lengthValue: { min: 0, max: 100 },
+      priceValue:  { min: 0, max: 500 },
     }
   }
 
-  onInputChange = (key, event) => {
-    this.setState({ [key]: event.target.value });
-  };
+  handleInputChange = (event) => {
+    const name = event.target.name;
+    const state = 
+      name === 'levels' ? this.state.levels :
+      name === 'frameworks' ? this.state.frameworks :
+      name === 'types' ? this.state.types : null 
+
+    if (state.includes(event.target.value)) {
+      let deleteIndex = state.indexOf(event.target.value);
+      state.splice(deleteIndex, 1);
+      this.setState({ [name]: state });
+    } else {
+      this.setState({ [name]: [...state, event.target.value] });
+    }
+  }
+
+  changeRangeValue = (name, value) => {
+    this.setState({ [name]: value })
+  }
 
   render() {
+    console.log("this state", this.state)
     return (
       <div className='app'>
         <MenuBar />
         <div className='app-content'>
-          <FilterPane />
-          <Courses coursePreferences={ this.state } />
+          <FilterPane 
+            levels={ this.state.levels } 
+            frameworks={ this.state.frameworks } 
+            types={ this.state.types }
+            changeRangeValue={ this.changeRangeValue }
+            handleInputChange={ this.handleInputChange }
+            lengthValue={ this.state.lengthValue }
+            priceValue={ this.state.priceValue } />
+          <Courses 
+            preferences={ this.state } />
         </div>
       </div>
     );
