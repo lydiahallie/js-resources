@@ -1,9 +1,18 @@
 .filterbar-wrapper {
   width: 800px;
   height: 400px;
+  display: -webkit-box; 
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex; 
   display: flex;
   flex-direction: column;
   justify-content: center;
+  -webkit-justify-content: center;
+  -webkit-box-align: center;
+  -moz-box-align: center;
+  -ms-flex-align: center;
+  -webkit-align-items: center;
   align-items: center;
   position: absolute;
   top: 10px;
