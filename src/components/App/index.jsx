@@ -2,34 +2,67 @@ import React, { Component } from 'react';
 import Particles from 'react-particles-js';
 import './styles.css';
 import Courses from '../Courses';
-import Header from '../Header';
 import FilterPane from '../FilterPane';
 import filter from 'lodash/filter';
 import includes from 'lodash/includes';
 import { COURSES } from '../../data/courses';
 import { Autocomplete } from 'react-materialize';
+import { Icon } from 'react-materialize';
+import { Link } from 'react-router-dom';
+  
+class MenuBar extends Component {
+  constructor() {
+    super();
+    this.state = {
+      showSearch: false,
+    }
+  }
 
-const MenuBar = ({updateSearch, dataSource }) => (
-  <div className="menubar-wrapper">
-    <div className="logo">
-      <h1>JavaScript Resources</h1>
-    </div>
-    <div className='menubar-btns'>
-      <Autocomplete
-        data={dataSource.source}
-        onChange={updateSearch}
-	    />
-    </div>
-    <div className='menubar-add'>
-      Add A Resource
-    </div>
-  </div>
-)
+  toggleSearch = () => {
+    this.setState({ showSearch: !this.state.showSearch });
+  }
+
+  render() {
+    console.log("this state", this.state.showSearch)
+    const { dataSource, updateSearch, device } = this.props;
+    return (
+      <div className="menubar-wrapper">
+        { device !== 'phone' && <div className="logo">
+          <h1>JavaScript Resources</h1>
+        </div> }
+        <div className={`menubar-btns device-${device}`}>
+        {device === 'desktop' ? 
+          <Autocomplete
+            data={dataSource.source}
+            onChange={updateSearch}
+          /> : 
+          <div className='search-phone'>
+            <div className={`autocomplete-wrapper show-${this.state.showSearch}`}>
+              <Autocomplete
+                data={dataSource.source}
+                onChange={updateSearch}
+              />
+            </div>
+            <div onClick={() => this.toggleSearch()}>
+              <Icon small>search</Icon>
+            </div>
+          </div>
+        }
+        </div>
+        <Link to='/add'>
+          <div className='menubar-add'>
+            {device !== 'phone' ? 'Add A Resource' : <Icon small>playlist_add</Icon> }
+          </div>
+        </Link>
+     </div>
+    );
+  }
+}
 
 export default class App extends Component {
   constructor() {
     super();
-    this.state = {
+    this.state = { 
       levels: [],
       frameworks: [],
       types: [],
@@ -37,6 +70,8 @@ export default class App extends Component {
       priceValue:  { min: 0, max: 500 },
       searchValue: '',
       dataSource: {},
+      width: 0,
+      device: '',
     }
   }
 
@@ -45,7 +80,8 @@ export default class App extends Component {
     const state = 
       name === 'levels' ? this.state.levels :
       name === 'frameworks' ? this.state.frameworks :
-      name === 'types' ? this.state.types : null 
+      name === 'types' ? this.state.types : 
+      null 
 
     if (state.includes(event.target.value)) {
       let deleteIndex = state.indexOf(event.target.value);
@@ -62,6 +98,7 @@ export default class App extends Component {
       source[`${course.name}`] = course.img;
       this.setState({ dataSource: {...this.state.dataSource, source} })
     })
+    window.onresize = () => this.updateWindowDimensions();
   }
 
   changeRangeValue = (name, value) => {
@@ -72,10 +109,27 @@ export default class App extends Component {
     this.setState({ searchValue: event.target.value });
   }
 
+  updateWindowDimensions = () => {
+    const width = window.innerWidth || 
+      document.documentElement.clientWidth ||
+      document.body.clientWidth;
+    if (width > 1000) {
+      this.setState({ device: 'desktop' })
+    }
+    if (width < 1000) {
+      this.setState({ device: 'medium' })
+    } 
+    if (width < 600) {
+      this.setState({ device: 'phone' })
+    } 
+  }
+
   render() {
+    console.log('data soruce', this.state.dataSource)
+    console.log("device", this.state.device)
     return (
       <div className='app'>
-        <MenuBar dataSource={ this.state.dataSource } updateSearch={this.updateSearch} />
+        <MenuBar device={ this.state.device } dataSource={ this.state.dataSource } updateSearch={this.updateSearch} />
         <div className='app-content'>
           <FilterPane 
             levels={ this.state.levels } 

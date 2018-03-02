@@ -35,7 +35,7 @@ body {
 }
 
 .menubar-btns {
-  width: 600px;
+  width: 30%;
   display: -webkit-box; 
   display: -moz-box;
   display: -ms-flexbox;
@@ -65,10 +65,12 @@ body {
   text-transform: uppercase;
 }
 
+.logo {
+  width: 300px;
+}
+
 .logo h1 {
-  margin-right: 100px;
   color: black;
-  width: 400px;
   margin-left: 30px;
 }
 
@@ -167,4 +169,30 @@ body {
 
 .autocomplete-content {
   position: absolute !important;
+}
+
+.autocomplete-wrapper.show-false {
+  width: 0px;
+  transition: .3s;
+  opacity: 0;
+}
+
+.autocomplete-wrapper.show-true {
+  width: 200px;
+  transition: .3s;
+}
+
+.search-phone {
+  display: flex;
+  align-items: center;
+}
+
+@media only screen and (max-width: 600px) {
+  .menubar-add {
+    width: 60px;
+  }
+  
+  .autocomplete-wrapper.show-true .autocomplete {
+    width: 0px !important;
+  }
 }
