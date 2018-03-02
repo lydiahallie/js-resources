@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Icon, Input } from 'react-materialize';
-import Checkbox from './checkbox';
 import InputRange from 'react-input-range';
+import PropTypes from 'prop-types';
 import './styles.css';
 import 'react-input-range/lib/css/index.css';
 
@@ -91,3 +91,13 @@ export default class FilterPane extends Component {
     );
   }
 }
+
+FilterPane.propTypes = {
+  levels: PropTypes.string.isRequired,
+  frameworks: PropTypes.string.isRequired,
+  types: PropTypes.string.isRequired,
+  changeRangeValue: PropTypes.func.isRequired,
+  handleInputChange: PropTypes.func.isRequired,
+  lengthValue: PropTypes.number.isRequired,
+  priceValue:  PropTypes.number.isRequired,
+};

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import './styles.css';
 import { COURSES } from '../../data/courses';
 
@@ -80,11 +81,35 @@ export default class Courses extends Component {
     return (
       <div className='courses-wrapper'>
         <div className='courses-list'>
-          { filteredCourses.map((course) => (
+          { !filteredCourses.length ? 
+            <p className='empty-list'>Oh no! It doesn't seem like there are any resources that match your preferences! :(</p> :
+            filteredCourses.map((course) => (
             <Course course={course}/>
           )) }
         </div>
       </div>
     );
   }
+}
+
+Courses.propTypes = {
+  preferences: PropTypes.objectOf(PropTypes.shape({
+    levels: PropTypes.arrayOf(PropTypes.string).isRequired,
+    frameworks: PropTypes.arrayOf(PropTypes.string).isRequired,
+    types: PropTypes.arrayOf(PropTypes.string).isRequired,
+    lengthValue: PropTypes.objectOf(PropTypes.shape({
+      min: PropTypes.number,
+      max: PropTypes.number,
+    })).isRequired,
+    priceValue: PropTypes.objectOf(PropTypes.shape({
+      min: PropTypes.number,
+      max: PropTypes.number,
+    })).isRequired,
+    searchValue: PropTypes.string.isRequired,
+    dataSource: PropTypes.objectOf(PropTypes.shape({
+      source: PropTypes.object.isRequired,
+    })).isRequired,
+    width: PropTypes.number.isRequired,
+    device: PropTypes.string.isRequired,
+  })).isRequired,
 }
