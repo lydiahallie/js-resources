@@ -187,12 +187,83 @@ body {
   align-items: center;
 }
 
-@media only screen and (max-width: 600px) {
+.search-icon-min {
+  height: 30px;
+  width: 20px;
+}
+
+.input-field.col {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.search-bar {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.search-icon {
+  margin-left: -50px;
+  color: darkgrey;
+  z-index: 999;
+}
+
+.resources-big {
+  display: -webkit-box; 
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex; 
+  display: flex;
+  -webkit-box-align: center;
+  -moz-box-align: center;
+  -ms-flex-align: center;
+  -webkit-align-items: center;
+  align-items: center;
+}
+
+.resources-big i {
+  margin-right: 10px;
+}
+
+.favorite-resources {
+  background: white;
+  width: 300px;
+}
+
+.favorites-container {
+  margin-bottom: -200px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+@media only screen and (max-width: 1000px) {  
+  .autocomplete {
+    margin-right: 30px !important;
+  }
+
+  .search-icon {
+    margin-left: -80px;
+  }
+
+  .search-bar.expanded-false .autocomplete {
+    width: 20% !important;
+  }
+
+  .search-bar.expanded-true .autocomplete {
+    width: 100% !important;
+  }
+}
+
+@media only screen and (max-width: 800px) {  
   .menubar-add {
     width: 60px;
   }
-  
-  .autocomplete-wrapper.show-true .autocomplete {
-    width: 0px !important;
+}
+
+@media only screen and (max-width: 770px) {
+  .filterpane-wrapper {
+    height: 600px;
   }
 }

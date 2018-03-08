@@ -55,8 +55,13 @@ h1 {
   transition: .3s;
 }
 
+.course-wrapper .material-icons {
+  font-size: 35px;
+  color: grey;
+}
+
 .course-img {
-  height: 200px;
+  height: 150px;
   width: 250px;
 }
 
@@ -173,4 +178,20 @@ h1 {
   margin-bottom: 10px;
   color: rgba(0, 0, 0, 0.7);
   font-size: 12px;
+}
+
+.empty-list {
+  font-family: 'Montserrat', sans-serif;
+  color: grey;
+  font-size: 14px;
+}
+
+.icon-favorite {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 30px;
+  position: relative;
+  left: 20px;
+  top: 10px;
 }

@@ -27,29 +27,21 @@ export class MenuBar extends Component {
           <h1>JavaScript Resources</h1>
         </div> }
         <div className={`menubar-btns device-${device}`}>
-        {device === 'desktop' ? 
-          <Autocomplete
-            data={dataSource.source}
-            onChange={updateSearch}
-          /> : 
-          <div className='search-phone'>
-            <div className={`autocomplete-wrapper show-${this.state.showSearch}`}>
-              <Autocomplete
-                data={dataSource.source}
-                onChange={updateSearch}
-              />
-            </div>
-            <div onClick={() => this.toggleSearch()}>
-              <Icon small>search</Icon>
-            </div>
+          <div className={`search-bar expanded-${this.state.showSearch}`}>
+            <Autocomplete
+              data={dataSource.source}
+              onChange={updateSearch}
+            />
+            <Icon className='search-icon' small onClick={ () => this.toggleExpand('showSearch', this.state.showSearch) }>search</Icon>
           </div>
-        }
         </div>
-        <Link to='/add'>
-          <div className='menubar-add'>
-            {device !== 'phone' ? 'Add A Resource' : <Icon small>playlist_add</Icon> }
+        <div className='favorites-container'>
+          <div className='menubar-add' onClick={ () => this.toggleExpand('showFavorites', this.state.showFavorites) }>
+            { device === 'desktop' || device === 'big-medium' ? 
+            <div className='resources-big'><Icon small>star</Icon> Saved Resources</div> : 
+            <Icon small>playlist_add</Icon> }
           </div>
-        </Link>
+        </div>
      </div>
     );
   }
@@ -58,7 +50,7 @@ export class MenuBar extends Component {
 export default class App extends Component {
   constructor() {
     super();
-    this.state = { 
+    this.state = {
       levels: [],
       frameworks: [],
       types: [],
@@ -103,6 +95,7 @@ export default class App extends Component {
       source[`${course.name}`] = course.img;
       this.setState({ dataSource: {...this.state.dataSource, source} })
     })
+    this.updateWindowDimensions()
     window.onresize = () => this.updateWindowDimensions();
   }
 
@@ -159,9 +152,11 @@ export default class App extends Component {
             lengthValue={ this.state.lengthValue }
             priceValue={ this.state.priceValue } />
           <Courses 
+            addFavoriteCourse={this.addFavoriteCourse}
             preferences={ this.state } />
         </div>
       </div>
     );
   }
 }
+

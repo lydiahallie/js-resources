@@ -14,11 +14,12 @@
   display: -webkit-flex; 
   display: flex;
   transition: .5s;
+  width: 80vw;
 }
 
 .filter-column {
   height: 130px;
-  width: 250px;
+  width: 25%;
   margin-top: 30px;
   display: -webkit-box; 
   display: -moz-box;
