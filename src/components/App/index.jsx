@@ -72,6 +72,7 @@ export default class App extends Component {
       dataSource: {},
       width: 0,
       device: '',
+      favoriteCourses: new Set(),
     }
   }
 
@@ -80,8 +81,16 @@ export default class App extends Component {
     const state = 
       name === 'levels' ? this.state.levels :
       name === 'frameworks' ? this.state.frameworks :
-      name === 'types' ? this.state.types : 
+      name === 'types' ? this.state.types :
       null 
+
+    if (state.includes(event.target.value)) {
+      let deleteIndex = state.indexOf(event.target.value);
+      state.splice(deleteIndex, 1);
+      this.setState({ [name]: state })
+    } else {
+      this.setState({ [name]: [...state, event.target.value ]});
+    }
 
     if (state.includes(event.target.value)) {
       let deleteIndex = state.indexOf(event.target.value);
@@ -111,25 +120,39 @@ export default class App extends Component {
 
   updateWindowDimensions = () => {
     const width = window.innerWidth || 
-      document.documentElement.clientWidth ||
-      document.body.clientWidth;
+                  document.documentElement.clientWidth ||
+                  document.body.clientWidth;
+
     if (width > 1000) {
-      this.setState({ device: 'desktop' })
+      this.setState({ device: 'desktop' });
+    } else if (width < 1000) {
+      this.setState({ device: 'big-medium '});
+    } else if (width < 800) {
+      this.setState({ device: 'medium' });
+    } else if (width < 600) {
+      this.setState({ device: 'phone' });
     }
-    if (width < 1000) {
-      this.setState({ device: 'medium' })
-    } 
-    if (width < 600) {
-      this.setState({ device: 'phone' })
-    } 
+  }
+
+  addFavoriteCourse = (course) => {
+    const { favoriteCourses } = this.state;
+    if (favoriteCourses.has(course)) {
+      favoriteCourses.delete(course)
+      this.setState({ favoriteCourses })
+    } else {
+      favoriteCourses.add(course)
+      this.setState({ favoriteCourses });
+    }
   }
 
   render() {
-    console.log('data soruce', this.state.dataSource)
-    console.log("device", this.state.device)
     return (
       <div className='app'>
-        <MenuBar device={ this.state.device } dataSource={ this.state.dataSource } updateSearch={this.updateSearch} />
+        <MenuBar 
+          device={ this.state.device } 
+          dataSource={ this.state.dataSource } 
+          updateSearch={this.updateSearch}
+          favoriteCourses={ this.state.favoriteCourses } />
         <div className='app-content'>
           <FilterPane 
             levels={ this.state.levels } 
