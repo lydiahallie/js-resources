@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import './styles.css';
-import Courses from '../Courses';
 import FilterPane from '../FilterPane';
+import Courses from '../Courses';
 import { COURSES } from '../../data/courses';
-import { Autocomplete } from 'react-materialize';
-import { Icon } from 'react-materialize';
+
+import { Autocomplete, Icon } from 'react-materialize';
+import './styles.css';
 
 export class MenuBar extends Component {
   constructor() {

@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import './styles.css';
-import { COURSES } from '../../data/courses';
 import { Icon } from 'react-materialize';
+import { COURSES } from '../../data/courses';
+
+import './styles.css';
 
 const filterPaneOptions = {
   levels: ['Beginner', 'Intermediate', 'Advanced'],
