@@ -1,29 +1,25 @@
 import React, { Component } from 'react';
-import Particles from 'react-particles-js';
 import './styles.css';
 import Courses from '../Courses';
 import FilterPane from '../FilterPane';
-import filter from 'lodash/filter';
-import includes from 'lodash/includes';
 import { COURSES } from '../../data/courses';
 import { Autocomplete } from 'react-materialize';
 import { Icon } from 'react-materialize';
-import { Link } from 'react-router-dom';
-  
-class MenuBar extends Component {
+
+export class MenuBar extends Component {
   constructor() {
     super();
     this.state = {
       showSearch: false,
+      showFavorites: false,
     }
   }
 
-  toggleSearch = () => {
-    this.setState({ showSearch: !this.state.showSearch });
+  toggleExpand = (key, bool) => {
+    this.setState({ [key]: !bool });
   }
 
   render() {
-    console.log("this state", this.state.showSearch)
     const { dataSource, updateSearch, device } = this.props;
     return (
       <div className="menubar-wrapper">
