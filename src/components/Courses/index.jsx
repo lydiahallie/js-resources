@@ -87,9 +87,12 @@ export default class Courses extends Component {
       <div className='courses-wrapper'>
         <div className='courses-list'>
           { !filteredCourses.length ? 
-            <p className='empty-list'>Oh no! It doesn't seem like there are any resources that match your preferences! :(</p> :
+            <p className='empty-list'>Oh no! It doesn't seem like there are any resources that match your preferences!</p> :
             filteredCourses.map((course) => (
-            <Course course={course}/>
+            <Course 
+              favoriteCourses={ filterPredicates.favoriteCourses } 
+              addFavoriteCourse={this.props.addFavoriteCourse} 
+              course={course} />
           )) }
         </div>
       </div>
