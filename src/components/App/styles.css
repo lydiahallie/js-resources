@@ -12,6 +12,10 @@ body {
   display: -webkit-flex; 
   display: flex;
   flex-direction: column;
+  width: 100vw;
+  overflow-x: hidden;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .menubar-wrapper {
