@@ -25,9 +25,13 @@ const CourseInfoRow = ({first, course}) => {
         name={first ? 'price' : 'framework'} 
         content={first ? course.price : course.framework} />
       <div className='line' />
-      <CourseInfoBox name='rating' content={course.rating} />
+      <CourseInfoBox 
+        name={first ? 'rating' : 'length'}
+        content={first ? course.rating : course.length} />
       <div className='line' />
-      <CourseInfoBox name='level' content={course.level} />
+      <CourseInfoBox 
+        name={first ? 'level' : 'type'}
+        content={first ? course.level : course.type} />
     </div>
   );
 }
@@ -49,11 +53,11 @@ const Course = ({favoriteCourses, course, addFavoriteCourse}) => (
         <CourseInfoRow course={course} />
       </div>
     </div>
-    <a href={course.url}><button className='course-link'>Go To Resource</button></a>
+    <a href={course.url} target="_blank"><button className='course-link'>Go To Resource</button></a>
   </div>
 )
 
-export class Courses extends React.Component  {
+export class Courses extends Component  {
   render() {
     const {
       addFavoriteCourse,
@@ -68,16 +72,20 @@ export class Courses extends React.Component  {
     } = this.props;
     const activeLevels = levels.length > 0 ? levels : filterPaneOptions.levels,
           activeTypes = types.length > 0 ? types : filterPaneOptions.type,
-          activeFrameworks = frameworks.length > 0 ? frameworks : filterPaneOptions.frameworks
+          activeFrameworks = frameworks.length > 0 ? frameworks : filterPaneOptions.frameworks;
     const filteredCourses = COURSES.filter(course => {
-      if (course.name.toLowerCase().includes(searchValue.toLowerCase()) &&
-        activeLevels.includes(course.level) &&
-        activeTypes.includes(course.type) &&
-        activeFrameworks.includes(course.framework) &&
-        priceValue.min <= course.price &&
-        priceValue.max >= course.price &&
-        lengthValue.min <= course.length &&
-        lengthValue.max >= course.length) return course;
+      if (searchValue === undefined) {
+        return course;
+      } else {
+        if (course.name.toLowerCase().includes(searchValue.toLowerCase()) &&
+          activeLevels.includes(course.level) &&
+          activeTypes.includes(course.type) &&
+          activeFrameworks.includes(course.framework) &&
+          priceValue.min <= course.price &&
+          priceValue.max >= course.price &&
+          lengthValue.min <= course.length &&
+          lengthValue.max >= course.length) return course;
+      }
     })
 
     return (
