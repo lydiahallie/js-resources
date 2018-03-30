@@ -1,0 +1,15 @@
+.favorite-courses-wrapper {
+  position: absolute;
+  z-index: 1;
+  height: calc(100vh - 60px);
+  background-color: #F2F2F2;
+  box-shadow: -3px 1px 20px 0 rgba(0, 0, 0, 0.2);
+  width: 400px;
+  right: 0px;
+}
+
+@keyframes slideIn {
+  100% {
+    right: 0px;
+  }
+}
