@@ -20,13 +20,13 @@ export class MenuBar extends Component {
   }
 
   render() {
-    const { dataSource, updateSearch, device, toggleFavorites } = this.props;
+    const { dataSource, updateSearch, device, toggleFavorites, showFavorites, favoriteCourses } = this.props;
+    console.log('favorite courses length', favoriteCourses.size)
     return (
       <div className="menubar-wrapper">
-        { device !== 'phone' && <div className="logo">
-          <h1>JavaScript Resources</h1>
-        </div> }
-        <div className={`menubar-btns device-${device}`}>
+        <div className="logo">
+          <h1>JavaScript { device === 'phone' && <br /> } Resources</h1>
+        </div> 
         {/* <div className={`menubar-btns device-${device}`}>
           <div className={`search-bar expanded-${this.state.showSearch}`}>
             <Autocomplete
@@ -35,13 +35,18 @@ export class MenuBar extends Component {
             />
             <Icon className='search-icon' small onClick={ () => this.toggleExpand('showSearch', this.state.showSearch) }>search</Icon>
           </div>
-        </div>
         </div> */}
         <div className='favorites-container'>
           <div className='menubar-add' onClick={ toggleFavorites }>
             { device === 'desktop' || device === 'big-medium' ? 
-            <div className='resources-big'><Icon small>star</Icon> Saved Resources</div> : 
-            <Icon small>playlist_add</Icon> }
+            <div className='resources-big'> 
+              <Icon small>star</Icon>
+              <div>
+                <span>{showFavorites ? 'Hide' : 'Show'} Resources</span>
+                <div id="counter">{`${favoriteCourses.size} selected`}</div>
+              </div>
+            </div> : 
+            <Icon small>star</Icon> }
           </div>
         </div>
      </div>
@@ -68,7 +73,6 @@ export default class App extends Component {
   }
 
   handleInputChange = (event) => {
-    console.log("Handle input change!")
     const name = event.target.name;
     const state = 
       name === 'levels' ? this.state.levels :
@@ -77,13 +81,10 @@ export default class App extends Component {
       null 
 
     if (state.includes(event.target.value)) {
-      console.log("state before", state)
       let deleteIndex = state.indexOf(event.target.value);
       state.splice(deleteIndex, 1);
-      console.log("state after", state)
       this.setState({ [name]: state });
     } else {
-      console.log("IS new")
       this.setState({ [name]: [...state, event.target.value] });
     }
   }
@@ -94,7 +95,7 @@ export default class App extends Component {
       source[`${course.name}`] = course.img;
       this.setState({ dataSource: {...this.state.dataSource, source} })
     })
-    this.updateWindowDimensions()
+    this.updateWindowDimensions();
     window.onresize = () => this.updateWindowDimensions();
   }
 
@@ -103,6 +104,8 @@ export default class App extends Component {
   }
 
   updateSearch = (event) => {
+    console.log("event target value", event.target.value)
+    event.preventDefault();
     this.setState({ searchValue: event.target.value });
   }
 
@@ -113,9 +116,9 @@ export default class App extends Component {
 
     if (width > 1000) {
       this.setState({ device: 'desktop' });
-    } else if (width < 1000) {
-      this.setState({ device: 'big-medium '});
-    } else if (width < 800) {
+    } else if (width >= 800 && width < 1000) {
+      this.setState({ device: 'big-medium'});
+    } else if (width >= 600 && width < 800) {
       this.setState({ device: 'medium' });
     } else if (width < 600) {
       this.setState({ device: 'phone' });
@@ -123,6 +126,7 @@ export default class App extends Component {
   }
 
   addFavoriteCourse = (course) => {
+    console.log("add em")
     const { favoriteCourses } = this.state;
     if (favoriteCourses.has(course)) {
       favoriteCourses.delete(course)
@@ -138,20 +142,22 @@ export default class App extends Component {
   }
 
   render() {
-    console.log("frameworks", this.state.frameworks)
-    console.log("level", this.state.levels)
-    console.log("Favorite courses", this.state.favoriteCourses)
-    console.log("show favorites", this.state.showFavorites)
+    console.log("Search value", this.state.searchValue)
     return (
       <div className='app'>
         <MenuBar 
           device={ this.state.device } 
           dataSource={ this.state.dataSource } 
           updateSearch={this.updateSearch}
+          showFavorites={ this.state.showFavorites }
           favoriteCourses={ this.state.favoriteCourses }
           toggleFavorites={ this.toggleFavorites } />
         <div className='app-content'>
-          <FavoriteCourses favoriteCourses={ this.state.favoriteCourses }/> 
+          <FavoriteCourses 
+            showFavorites={this.state.showFavorites} 
+            favoriteCourses={ this.state.favoriteCourses }
+            device={ this.state.device }
+            addFavoriteCourse={this.addFavoriteCourse} />
           <FilterPane 
             levels={ this.state.levels }
             frameworks={ this.state.frameworks } 
