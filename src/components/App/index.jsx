@@ -27,6 +27,7 @@ export class MenuBar extends Component {
           <h1>JavaScript Resources</h1>
         </div> }
         <div className={`menubar-btns device-${device}`}>
+        {/* <div className={`menubar-btns device-${device}`}>
           <div className={`search-bar expanded-${this.state.showSearch}`}>
             <Autocomplete
               data={dataSource.source}
@@ -35,6 +36,7 @@ export class MenuBar extends Component {
             <Icon className='search-icon' small onClick={ () => this.toggleExpand('showSearch', this.state.showSearch) }>search</Icon>
           </div>
         </div>
+        </div> */}
         <div className='favorites-container'>
           <div className='menubar-add' onClick={ toggleFavorites }>
             { device === 'desktop' || device === 'big-medium' ? 
