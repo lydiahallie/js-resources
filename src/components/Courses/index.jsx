@@ -73,6 +73,7 @@ export default class Courses extends Component {
           minPrice = filterPredicates.priceValue.min,
           maxPrice = filterPredicates.priceValue.max
 
+    const activeLevels = levels.length > 0 ? levels : filterPaneOptions.levels,
     const filteredCourses = COURSES.filter(course => {
      if (course.name.toLowerCase().includes(this.props.preferences.searchValue.toLowerCase()) &&
         levels.includes(course.level) &&
