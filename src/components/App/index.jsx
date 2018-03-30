@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import FilterPane from '../FilterPane';
-import Courses from '../Courses';
+import { Courses } from '../Courses';
 import { COURSES } from '../../data/courses';
-
+import { FavoriteCourses } from '../FavoriteCourses';
 import { Autocomplete, Icon } from 'react-materialize';
 import './styles.css';
 
@@ -20,7 +20,7 @@ export class MenuBar extends Component {
   }
 
   render() {
-    const { dataSource, updateSearch, device } = this.props;
+    const { dataSource, updateSearch, device, toggleFavorites } = this.props;
     return (
       <div className="menubar-wrapper">
         { device !== 'phone' && <div className="logo">
@@ -36,7 +36,7 @@ export class MenuBar extends Component {
           </div>
         </div>
         <div className='favorites-container'>
-          <div className='menubar-add' onClick={ () => this.toggleExpand('showFavorites', this.state.showFavorites) }>
+          <div className='menubar-add' onClick={ toggleFavorites }>
             { device === 'desktop' || device === 'big-medium' ? 
             <div className='resources-big'><Icon small>star</Icon> Saved Resources</div> : 
             <Icon small>playlist_add</Icon> }
@@ -61,10 +61,12 @@ export default class App extends Component {
       width: 0,
       device: '',
       favoriteCourses: new Set(),
+      showFavorites: false,
     }
   }
 
   handleInputChange = (event) => {
+    console.log("Handle input change!")
     const name = event.target.name;
     const state = 
       name === 'levels' ? this.state.levels :
@@ -73,18 +75,13 @@ export default class App extends Component {
       null 
 
     if (state.includes(event.target.value)) {
+      console.log("state before", state)
       let deleteIndex = state.indexOf(event.target.value);
       state.splice(deleteIndex, 1);
-      this.setState({ [name]: state })
-    } else {
-      this.setState({ [name]: [...state, event.target.value ]});
-    }
-
-    if (state.includes(event.target.value)) {
-      let deleteIndex = state.indexOf(event.target.value);
-      state.splice(deleteIndex, 1);
+      console.log("state after", state)
       this.setState({ [name]: state });
     } else {
+      console.log("IS new")
       this.setState({ [name]: [...state, event.target.value] });
     }
   }
@@ -134,26 +131,43 @@ export default class App extends Component {
     }
   }
 
+  toggleFavorites = () => {
+    this.setState({ showFavorites: !this.state.showFavorites })
+  }
+
   render() {
+    console.log("frameworks", this.state.frameworks)
+    console.log("level", this.state.levels)
+    console.log("Favorite courses", this.state.favoriteCourses)
+    console.log("show favorites", this.state.showFavorites)
     return (
       <div className='app'>
         <MenuBar 
           device={ this.state.device } 
           dataSource={ this.state.dataSource } 
           updateSearch={this.updateSearch}
-          favoriteCourses={ this.state.favoriteCourses } />
+          favoriteCourses={ this.state.favoriteCourses }
+          toggleFavorites={ this.toggleFavorites } />
         <div className='app-content'>
+          <FavoriteCourses favoriteCourses={ this.state.favoriteCourses }/> 
           <FilterPane 
-            levels={ this.state.levels } 
+            levels={ this.state.levels }
             frameworks={ this.state.frameworks } 
             types={ this.state.types }
+            lengthValue={ this.state.lengthValue }
             changeRangeValue={ this.changeRangeValue }
             handleInputChange={ this.handleInputChange }
-            lengthValue={ this.state.lengthValue }
             priceValue={ this.state.priceValue } />
           <Courses 
             addFavoriteCourse={this.addFavoriteCourse}
-            preferences={ this.state } />
+            levels={ this.state.levels }
+            frameworks={ this.state.frameworks }
+            types={ this.state.types }
+            lengthValue={ this.state.lengthValue }
+            priceValue={ this.state.priceValue }
+            searchValue={ this.state.searchValue }
+            dataSources={ this.state.dataSources }
+            favoriteCourses={ this.state.favoriteCourses } /> 
         </div>
       </div>
     );

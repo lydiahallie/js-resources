@@ -11,6 +11,27 @@ const filterPaneOptions = {
   type: ['Online', 'Book', 'Podcast'],
 };
 
+const CourseInfoBox = ({name, content}) => (
+  <div className='course-info-box'>
+    <h6>{name}</h6>
+    <p>{content}</p>
+  </div>
+)
+
+const CourseInfoRow = ({first, course}) => {
+  return (
+    <div className='course-info-row'>
+      <CourseInfoBox 
+        name={first ? 'price' : 'framework'} 
+        content={first ? course.price : course.framework} />
+      <div className='line' />
+      <CourseInfoBox name='rating' content={course.rating} />
+      <div className='line' />
+      <CourseInfoBox name='level' content={course.level} />
+    </div>
+  );
+}
+
 const Course = ({favoriteCourses, course, addFavoriteCourse}) => (
   <div className='course-wrapper'>
     <div className='icon-favorite' onClick={ () => addFavoriteCourse(course)}>
@@ -23,66 +44,40 @@ const Course = ({favoriteCourses, course, addFavoriteCourse}) => (
       <h4 className='course-title'>{course.name}</h4>
       <h5 className='course-description'>{course.decription}</h5>
       <div className='course-info'>
-        <div className='course-info-row'>
-          <div className='course-info-box'>
-            <h6>price</h6>
-            <p>{course.price}</p>
-          </div>
-          <div className='line' />
-          <div className='course-info-box'>
-            <h6>rating</h6>
-            <p>{course.rating}/5</p>
-          </div>
-          <div className='line' />
-          <div className='course-info-box'>
-            <h6>level</h6>
-            <p>{course.level}</p>
-          </div>
-        </div>
+        <CourseInfoRow first course={course} />
         <div className='line horizontal' />
-        <div className='course-info-row'>
-          <div className='course-info-box'>
-            <h6>type</h6>
-            <p>{course.type}</p>
-          </div>
-          <div className='line' />
-          <div className='course-info-box'>
-            <h6>framework</h6>
-            <p>{course.framework}</p>
-          </div>
-          <div className='line' />
-          <div className='course-info-box'>
-            <h6>length</h6>
-            <p>{course.length}</p>
-          </div>
-        </div>
+        <CourseInfoRow course={course} />
       </div>
     </div>
     <a href={course.url}><button className='course-link'>Go To Resource</button></a>
   </div>
 )
 
-export default class Courses extends Component {
+export class Courses extends React.Component  {
   render() {
-    const filterPredicates = this.props.preferences,
-          levels = filterPredicates.levels.length > 0 ? filterPredicates.levels : filterPaneOptions.levels,
-          types = filterPredicates.types.length > 0 ? filterPredicates.types : filterPaneOptions.type,
-          frameworks = filterPredicates.frameworks.length > 0 ? filterPredicates.frameworks : filterPaneOptions.frameworks,
-          maxLength = filterPredicates.lengthValue.max,
-          minLength = filterPredicates.lengthValue.min,
-          minPrice = filterPredicates.priceValue.min,
-          maxPrice = filterPredicates.priceValue.max
-
+    const {
+      addFavoriteCourse,
+      levels,
+      frameworks,
+      types,
+      lengthValue,
+      priceValue,
+      searchValue,
+      dataSources,
+      favoriteCourses,
+    } = this.props;
     const activeLevels = levels.length > 0 ? levels : filterPaneOptions.levels,
+          activeTypes = types.length > 0 ? types : filterPaneOptions.type,
+          activeFrameworks = frameworks.length > 0 ? frameworks : filterPaneOptions.frameworks
     const filteredCourses = COURSES.filter(course => {
-     if (course.name.toLowerCase().includes(this.props.preferences.searchValue.toLowerCase()) &&
-        levels.includes(course.level) &&
-        types.includes(course.type) &&
-        frameworks.includes(course.framework) &&
-        minPrice <= course.price &&
-        maxPrice >= course.price &&
-        minLength <= course.length &&
-        maxLength >= course.length) return course;
+      if (course.name.toLowerCase().includes(searchValue.toLowerCase()) &&
+        activeLevels.includes(course.level) &&
+        activeTypes.includes(course.type) &&
+        activeFrameworks.includes(course.framework) &&
+        priceValue.min <= course.price &&
+        priceValue.max >= course.price &&
+        lengthValue.min <= course.length &&
+        lengthValue.max >= course.length) return course;
     })
 
     return (
@@ -92,9 +87,9 @@ export default class Courses extends Component {
             <p className='empty-list'>Oh no! It doesn't seem like there are any resources that match your preferences!</p> :
             filteredCourses.map((course) => (
             <Course 
-              favoriteCourses={ filterPredicates.favoriteCourses } 
-              addFavoriteCourse={this.props.addFavoriteCourse} 
-              course={course} />
+              favoriteCourses={ favoriteCourses } 
+              addFavoriteCourse={ addFavoriteCourse } 
+              course={ course } />
           )) }
         </div>
       </div>
@@ -103,23 +98,19 @@ export default class Courses extends Component {
 }
 
 Courses.propTypes = {
-  preferences: PropTypes.objectOf(PropTypes.shape({
-    levels: PropTypes.arrayOf(PropTypes.string).isRequired,
-    frameworks: PropTypes.arrayOf(PropTypes.string).isRequired,
-    types: PropTypes.arrayOf(PropTypes.string).isRequired,
-    lengthValue: PropTypes.objectOf(PropTypes.shape({
-      min: PropTypes.number.isRequired,
-      max: PropTypes.number.isRequired,
-    })).isRequired,
-    priceValue: PropTypes.objectOf(PropTypes.shape({
-      min: PropTypes.number.isRequired,
-      max: PropTypes.number.isRequired,
-    })).isRequired,
-    searchValue: PropTypes.string.isRequired,
-    dataSource: PropTypes.objectOf(PropTypes.shape({
-      source: PropTypes.object.isRequired,
-    })).isRequired,
-    width: PropTypes.number.isRequired,
-    device: PropTypes.string.isRequired,
+  levels: PropTypes.arrayOf(PropTypes.string).isRequired,
+  frameworks: PropTypes.arrayOf(PropTypes.string).isRequired,
+  types: PropTypes.arrayOf(PropTypes.string).isRequired,
+  lengthValue: PropTypes.objectOf(PropTypes.shape({
+    min: PropTypes.number.isRequired,
+    max: PropTypes.number.isRequired,
+  })).isRequired,
+  priceValue: PropTypes.objectOf(PropTypes.shape({
+    min: PropTypes.number.isRequired,
+    max: PropTypes.number.isRequired,
+  })).isRequired,
+  searchValue: PropTypes.string.isRequired,
+  dataSource: PropTypes.objectOf(PropTypes.shape({
+    source: PropTypes.object.isRequired,
   })).isRequired,
 }

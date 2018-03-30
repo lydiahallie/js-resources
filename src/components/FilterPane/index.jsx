@@ -42,12 +42,8 @@ export default class FilterPane extends Component {
 
   render() {
     const height = this.state.expanded ? '300px' : '30px';
-    const style = {
-      height,
-    }
-
     return (
-      <div className='filterpane-wrapper' style={style}>
+      <div className='filterpane-wrapper' style={{height}}>
         { this.state.expanded ? <div className='filter-columns'>
           <div className='filter-column'>
             <h6>Level</h6>
@@ -94,9 +90,9 @@ export default class FilterPane extends Component {
 }
 
 FilterPane.propTypes = {
-  levels: PropTypes.string.isRequired,
-  frameworks: PropTypes.string.isRequired,
-  types: PropTypes.string.isRequired,
+  levels: PropTypes.array.isRequired,
+  frameworks: PropTypes.array.isRequired,
+  types: PropTypes.array.isRequired,
   changeRangeValue: PropTypes.func.isRequired,
   handleInputChange: PropTypes.func.isRequired,
   lengthValue: PropTypes.number.isRequired,
