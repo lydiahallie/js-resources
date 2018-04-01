@@ -1,7 +1,15 @@
+html {
+  overflow-x: hidden;
+  width: 100vw;
+}
+
+#root {
+  overflow-x: hidden;
+}
 body {
   margin: 0;
-
   padding: 0;
+  overflow-x: hidden;
 }
 
 .app {
@@ -244,6 +252,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
+  cursor: pointer;
 }
 
 .favorite-pane-wrapper.show-false {

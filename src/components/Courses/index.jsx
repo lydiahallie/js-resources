@@ -18,16 +18,29 @@ const CourseInfoBox = ({name, content}) => (
   </div>
 )
 
+const CourseRating = ({rating}) => {
+  let arr = new Array(rating).fill(0);
+  return (
+    <div className='rating-wrapper'>
+    { arr.map(star => 
+      <div id="rating">
+        <Icon small>star</Icon>
+      </div>
+    )}
+    </div>
+  )
+}
+
 const CourseInfoRow = ({first, course}) => {
   return (
     <div className='course-info-row'>
       <CourseInfoBox 
         name={first ? 'price' : 'framework'} 
-        content={first ? course.price : course.framework} />
+        content={first ? `$${course.price}` : course.framework} />
       <div className='line' />
       <CourseInfoBox 
         name={first ? 'rating' : 'length'}
-        content={first ? course.rating : course.length} />
+        content={first ? <CourseRating rating={course.rating} /> : `~${course.length} hrs` }/>
       <div className='line' />
       <CourseInfoBox 
         name={first ? 'level' : 'type'}
