@@ -1,0 +1,96 @@
+.favorite-courses-wrapper
+  position: absolute
+  z-index: 3
+  height: calc(100vh - 60px)
+  background-color: #F2F2F2
+  box-shadow: -3px 1px 20px 0 rgba(0, 0, 0, 0.2)
+  right: 0px
+  width: calc(100vw - 70%)
+  transition: 600ms ease-in-out
+
+.favorite-courses-wrapper.show-true
+  transform: translateX(0px) !important
+
+.favorite-course
+  display: flex
+  align-items: center
+  border-bottom: 1px solid lightgrey
+  height: 120px
+  position: relative
+  left: 0px
+  animation: slideIn 1s
+
+.favorite-course img
+  max-height: 68px
+  max-width: 100px
+  margin: 10px
+
+#fav-desc
+  font-size: 11px
+  letter-spacing: .5px
+  opacity: 0.6
+
+#fav-title
+  font-weight: bold
+
+#favorite-info-row
+  display: flex
+
+#fav-url
+  border-bottom: 3px solid #F1E01E
+  color: black
+
+.info-col
+  width: 60px
+  margin: 10px
+  border: 1px solid lightgrey
+
+.overwrapper-fav-course
+  display: flex
+  position: absolute
+  z-index: 5
+  width: 100%
+  height: 120px
+  background-color: rgba(0, 0, 0, 0.2)
+  justify-content: space-around
+  align-items: center
+  animation: fadeIn .3s
+
+.overwrapper-fav-course p
+  display: flex
+  justify-content: center
+  align-items: center
+  height: 50px
+  padding: 10px
+  font-weight: bold
+  border-radius: 3px
+  letter-spacing: .5px
+
+.overwrapper-fav-course p:hover
+  letter-spacing: 1px
+  transition: .3s
+
+#ofc-url
+  background: lightyellow
+  border: 3px solid yellow
+  color: black
+
+#ofc-rem
+  background: pink
+  border: 3px solid red
+
+#ofc-rem:hover
+  cursor: pointer
+
+#empty
+  padding-top: 50px
+  font-family: 'Montserrat', sans-serif
+  font-size: 13px
+  text-align: center
+
+@keyframes fadeIn
+  from { opacity: 0 }
+  to { opacity: 1 }
+
+@keyframes slideIn
+  0% { left: 400px }

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Icon } from 'react-materialize';
 import { COURSES } from '../../data/courses';
 
-import './styles.css';
+// import './styles.css';
 
 const filterPaneOptions = {
   levels: ['Beginner', 'Intermediate', 'Advanced'],
