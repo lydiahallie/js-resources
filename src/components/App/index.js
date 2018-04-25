@@ -19,6 +19,11 @@ export class MenuBar extends Component {
     this.setState({ [key]: !bool });
   }
 
+  onSearchClick = () => {
+    this.toggleExpand('showSearch', this.state.showSearch);
+    this.searchInput.updateSearch();
+  }
+
   render() {
     const { dataSource, updateSearch, device, toggleFavorites, showFavorites, favoriteCourses } = this.props;
     console.log('favorite courses length', favoriteCourses.size)
@@ -27,15 +32,16 @@ export class MenuBar extends Component {
         <div className="logo">
           <h1>JavaScript { device === 'phone' && <br /> } Resources</h1>
         </div> 
-        {/* <div className={`menubar-btns device-${device}`}>
+        <div className={`menubar-btns device-${device}`}>
           <div className={`search-bar expanded-${this.state.showSearch}`}>
             <Autocomplete
               data={dataSource.source}
               onChange={updateSearch}
+              ref={ (input) => { this.searchInput = input; } }
             />
-            <Icon className='search-icon' small onClick={ () => this.toggleExpand('showSearch', this.state.showSearch) }>search</Icon>
+            <Icon className='search-icon' small onClick={ () => this.onSearchClick() }>search</Icon>
           </div>
-        </div> */}
+        </div>
         <div className='favorites-container'>
           <div className='menubar-add' onClick={ toggleFavorites }>
             { device === 'desktop' || device === 'big-medium' ? 
