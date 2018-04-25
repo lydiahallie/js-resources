@@ -1,20 +1,25 @@
+html {
+  overflow-x: hidden;
+  width: 100vw;
+}
+
+#root {
+  overflow-x: hidden;
+}
 body {
   margin: 0;
-
   padding: 0;
+  overflow-x: hidden;
 }
 
 .app {
   background: rgba(0, 0, 0, 0.05);
-  height: 100vh;
-  display: -webkit-box; 
-  display: -moz-box;
-  display: -ms-flexbox;
-  display: -webkit-flex; 
+  height: 100vh; 
   display: flex;
   flex-direction: column;
   width: 100vw;
   overflow-x: hidden;
+  -webkit-overflow-x: hidden;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
 }
@@ -22,48 +27,25 @@ body {
 .menubar-wrapper {
   height: 60px;
   width: 100vw;
-  display: -webkit-box; 
-  display: -moz-box;
-  display: -ms-flexbox;
-  display: -webkit-flex; 
   display: flex;
-  -webkit-box-align: center;
-  -moz-box-align: center;
-  -ms-flex-align: center;
-  -webkit-align-items: center;
   align-items: center;
   background: white;
   border-bottom: 2px solid lightgrey;
   z-index: 4;
   justify-content: space-between;
-  -webkit-justify-content: space-between;
 }
 
 .menubar-btns {
   width: 30%;
-  display: -webkit-box; 
-  display: -moz-box;
-  display: -ms-flexbox;
-  display: -webkit-flex; 
   display: flex;
   justify-content: flex-end;
-  -webkit-justify-content: flex-end;
 }
 
 .menubar-btn {
   height: 60px;
   width: calc(100% / 3);
-  display: -webkit-box; 
-  display: -moz-box;
-  display: -ms-flexbox;
-  display: -webkit-flex; 
   display: flex;
   justify-content: center;
-  -webkit-justify-content: center;
-  -webkit-box-align: center;
-  -moz-box-align: center;
-  -ms-flex-align: center;
-  -webkit-align-items: center;
   align-items: center;
   border: 1px solid rgba(0, 0, 0, 0.05);
   font-family: 'Source Sans Pro', sans-serif;
@@ -101,17 +83,8 @@ body {
   color: black;
   height: 60px;
   width: 200px;
-  display: -webkit-box; 
-  display: -moz-box;
-  display: -ms-flexbox;
-  display: -webkit-flex; 
   display: flex;
   justify-content: center;
-  -webkit-justify-content: center;
-  -webkit-box-align: center;
-  -moz-box-align: center;
-  -ms-flex-align: center;
-  -webkit-align-items: center;
   align-items: center;
   font-weight: 900;
   font-size: 14px;
@@ -120,33 +93,16 @@ body {
 .thumbnail {
   width: 100%;
   height: 250px;
-  display: -webkit-box; 
-  display: -moz-box;
-  display: -ms-flexbox;
-  display: -webkit-flex; 
   display: flex;
   justify-content: center;
-  -webkit-justify-content: center;
-  -webkit-box-align: center;
-  -moz-box-align: center;
-  -ms-flex-align: center;
-  -webkit-align-items: center;
   align-items: center;
 }
 
 .filterpane-wrapper {
   background: #E3E3E3;
   height: 300px;
-  display: -webkit-box; 
-  display: -moz-box;
-  display: -ms-flexbox;
-  display: -webkit-flex; 
   display: flex;
   justify-content: center;
-  -webkit-box-align: center;
-  -moz-box-align: center;
-  -ms-flex-align: center;
-  -webkit-align-items: center;
   align-items: center;
 }
 
@@ -154,10 +110,6 @@ body {
   height: calc(100vh - 60px);
   overflow-y: scroll;
   overflow-x: hidden;
-  display: -webkit-box; 
-  display: -moz-box;
-  display: -ms-flexbox;
-  display: -webkit-flex; 
   display: flex;
   flex-direction: column;
 }
@@ -215,15 +167,7 @@ body {
 }
 
 .resources-big {
-  display: -webkit-box; 
-  display: -moz-box;
-  display: -ms-flexbox;
-  display: -webkit-flex; 
   display: flex;
-  -webkit-box-align: center;
-  -moz-box-align: center;
-  -ms-flex-align: center;
-  -webkit-align-items: center;
   align-items: center;
 }
 
@@ -244,6 +188,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
+  cursor: pointer;
 }
 
 .favorite-pane-wrapper.show-false {

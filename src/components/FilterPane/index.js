@@ -41,47 +41,55 @@ export default class FilterPane extends Component {
   }
 
   render() {
-    const height = this.state.expanded ? '300px' : '30px';
+    const height = this.props.device !== 'phone' ?
+      (this.state.expanded ? '300px' : '30px') :
+      (this.state.expanded ? '1100px' : '30px');
+
+    const wrapped = this.props.device === 'phone' ? true : false;
     return (
       <div className='filterpane-wrapper' style={{height}}>
-        { this.state.expanded ? <div className='filter-columns'>
-          <div className='filter-column'>
-            <h6>Level</h6>
-            <form onSubmit={this.handleFormSubmit}>
-              {this.createCheckboxes('levels')}
-            </form>
+        { this.state.expanded ? <div className={`filter-columns wrapped-${wrapped}`}>
+          <div className='filter-row'>
+            <div className='filter-column'>
+              <h6>Level</h6>
+              <form onSubmit={this.handleFormSubmit}>
+                {this.createCheckboxes('levels')}
+              </form>
+            </div>
+            <div className='filter-column'>
+              <h6>Framework</h6>
+              <form onSubmit={this.handleFormSubmit}>
+                {this.createCheckboxes('frameworks')}
+              </form>
+            </div>
           </div>
-          <div className='filter-column'>
-            <h6>Framework</h6>
-            <form onSubmit={this.handleFormSubmit}>
-              {this.createCheckboxes('frameworks')}
-            </form>
-          </div>
-          <div className='filter-column'>
-            <h6>Type</h6>
-            <form onSubmit={this.handleFormSubmit}>
-              {this.createCheckboxes('type')}
-            </form>
-          </div>
-          <div className='filter-column'>
-            <h6>Length in hours</h6>
-            <InputRange
-              step={1}
-              maxValue={100}
-              minValue={0}
-              value={this.props.lengthValue}
-              onChange={value => this.props.changeRangeValue('lengthValue', value)} />
-            <h6>Price in USD</h6>
-            <InputRange
-              step={1}
-              maxValue={500}
-              minValue={0}
-              value={this.props.priceValue}
-              onChange={value => this.props.changeRangeValue('priceValue', value)} />
+          <div className='filter-row'>
+            <div className='filter-column'>
+              <h6>Type</h6>
+              <form onSubmit={this.handleFormSubmit}>
+                {this.createCheckboxes('type')}
+              </form>
+            </div>
+            <div className='filter-column'>
+              <h6>Length in hours</h6>
+              <InputRange
+                step={1}
+                maxValue={100}
+                minValue={0}
+                value={this.props.lengthValue}
+                onChange={value => this.props.changeRangeValue('lengthValue', value)} />
+              <h6>Price in USD</h6>
+              <InputRange
+                step={1}
+                maxValue={500}
+                minValue={0}
+                value={this.props.priceValue}
+                onChange={value => this.props.changeRangeValue('priceValue', value)} />
+            </div>
           </div>
         </div> : 
         <h5>Expand the filter pane to filter through resources</h5> }
-        <i className={`expand-btn expanded-${this.state.expanded}`} onClick={this.toggleFilterPane}>
+        <i className={`expand-btn expanded-${this.state.expanded} ${this.props.device}`} onClick={this.toggleFilterPane}>
           <Icon small>{ this.state.expanded ? 'expand_less' : 'expand_more' }</Icon>
         </i>
       </div>

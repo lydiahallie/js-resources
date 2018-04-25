@@ -104,7 +104,6 @@ export default class App extends Component {
   }
 
   updateSearch = (event) => {
-    console.log("event target value", event.target.value)
     event.preventDefault();
     this.setState({ searchValue: event.target.value });
   }
@@ -126,7 +125,6 @@ export default class App extends Component {
   }
 
   addFavoriteCourse = (course) => {
-    console.log("add em")
     const { favoriteCourses } = this.state;
     if (favoriteCourses.has(course)) {
       favoriteCourses.delete(course)
@@ -142,7 +140,6 @@ export default class App extends Component {
   }
 
   render() {
-    console.log("Search value", this.state.searchValue)
     return (
       <div className='app'>
         <MenuBar 
@@ -159,6 +156,7 @@ export default class App extends Component {
             device={ this.state.device }
             addFavoriteCourse={this.addFavoriteCourse} />
           <FilterPane 
+            device={ this.state.device }
             levels={ this.state.levels }
             frameworks={ this.state.frameworks } 
             types={ this.state.types }

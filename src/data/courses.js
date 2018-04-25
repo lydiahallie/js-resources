@@ -9,7 +9,7 @@ export const COURSES = [
     img: 'https://tctechcrunch2011.files.wordpress.com/2015/04/codecode.jpg?w=738',
     framework: 'React',
     length: 8,
-    url: '',
+    url: 'http://www.theavocoder.com',
   },
   {
     name: 'JavaScript For Programmers',
@@ -21,7 +21,7 @@ export const COURSES = [
     img: 'http://www.stateofdigital.com/wp-content/uploads/2018/02/JavaScript-bg-400x267.jpeg',
     framework: 'None',
     length: 60,
-    url: '',
+    url: 'http://www.weather.com',
   },
   {
     name: 'Advanced JavaScript',
@@ -33,7 +33,7 @@ export const COURSES = [
     img: 'https://www.javascript.com/images/pages/resources/img-eloquent-js.jpg',
     framework: 'None',
     length: 100,
-    url: '',
+    url: 'http://www.facebook.com',
   },
   {
     name: 'JavaScript For Beginners',
@@ -45,7 +45,7 @@ export const COURSES = [
     img: 'https://jonlennartaasenden.files.wordpress.com/2016/11/672274_cd11_2.jpg?w=398&h=224',
     framework: 'Angular',
     length: 2,
-    url: '',
+    url: 'http://www.github.com',
   },
   {
     name: 'JavaScript For Beginners',
@@ -57,7 +57,7 @@ export const COURSES = [
     img: 'https://tctechcrunch2011.files.wordpress.com/2015/04/codecode.jpg?w=738',
     framework: 'Vue',
     length: 4,
-    url: '',
+    url: 'http://www.google.com',
   },
   {
     name: 'JavaScript For Beginners',
@@ -81,7 +81,7 @@ export const COURSES = [
     img: 'http://www.stateofdigital.com/wp-content/uploads/2018/02/JavaScript-bg-400x267.jpeg',
     framework: 'None',
     length: 60,
-    url: '',
+    url: 'http://www.airbnb.com',
   },
   {
     name: 'Advanced JavaScript',
@@ -93,7 +93,7 @@ export const COURSES = [
     img: 'https://www.javascript.com/images/pages/resources/img-eloquent-js.jpg',
     framework: 'None',
     length: 100,
-    url: '',
+    url: 'http://www.twitter.com',
   },
   {
     name: 'JavaScript For Beginners',
@@ -105,7 +105,7 @@ export const COURSES = [
     img: 'https://jonlennartaasenden.files.wordpress.com/2016/11/672274_cd11_2.jpg?w=398&h=224',
     framework: 'Angular',
     length: 2,
-    url: '',
+    url: 'http://www.instagram.com',
   },
   {
     name: 'JavaScript For Beginners',
@@ -117,6 +117,6 @@ export const COURSES = [
     img: 'https://tctechcrunch2011.files.wordpress.com/2015/04/codecode.jpg?w=738',
     framework: 'Vue',
     length: 4,
-    url: '',
+    url: 'http://www.gmail.com',
   },
 ]
