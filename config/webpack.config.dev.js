@@ -154,8 +154,7 @@ module.exports = {
           // Add sass.
           {
             test: /\.sass$/,
-            include: paths.appSrc,
-            loaders: ["style", "css", "sass"]
+            loaders: [require.resolve('style-loader'), require.resolve('css-loader'), require.resolve('sass-loader')]
           },
           // "postcss" loader applies autoprefixer to our CSS.
           // "css" loader resolves paths in CSS and adds assets as dependencies.
