@@ -194,4 +194,13 @@ h1 {
   position: relative;
   left: 20px;
   top: 10px;
+  cursor: pointer;
+}
+
+.rating-wrapper {
+  display: flex;
+}
+
+#rating i {
+  font-size: 10px !important;
 }

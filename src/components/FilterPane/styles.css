@@ -5,36 +5,31 @@
   justify-content: space-between;
   overflow: hidden;
   box-shadow: 1px 1px 20px 0 rgba(0, 0, 0, 0.2);
+  z-index: 2;
+  padding: 0 40px;
 }
 
 .filter-columns {
-  display: -webkit-box; 
-  display: -moz-box;
-  display: -ms-flexbox;
-  display: -webkit-flex; 
   display: flex;
   transition: .5s;
-  width: 80vw;
+  width: 100vw;
 }
 
 .filter-column {
   height: 130px;
-  width: 25%;
+  width: 200px;
   margin-top: 30px;
-  display: -webkit-box; 
-  display: -moz-box;
-  display: -ms-flexbox;
-  display: -webkit-flex; 
   display: flex;
-  flex-direction: column;
-  -webkit-box-align: center;
-  -moz-box-align: center;
-  -ms-flex-align: center;
-  -webkit-align-items: center;
   align-items: center;
+  flex-direction: column;
   justify-content: space-around;
-  -webkit-justify-content: space-around;
   font-family: 'Montserrat', sans-serif;
+}
+
+.filter-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .filter-column label {
@@ -43,6 +38,7 @@
 
 .filter-column h6 {
   font-weight: bolder;
+  text-align: center;
 }
 
 .input-range__track--active, .input-range__slider {
@@ -56,17 +52,8 @@
 .expand-btn {
   background-color: #E3E3E3;
   height: 23px;
-  display: -webkit-box; 
-  display: -moz-box;
-  display: -ms-flexbox;
-  display: -webkit-flex; 
   display: flex;
   justify-content: center;
-  -webkit-justify-content: center;
-  -webkit-box-align: center;
-  -moz-box-align: center;
-  -ms-flex-align: center;
-  -webkit-align-items: center;
   align-items: center;
   width: 50px;
   border-bottom-left-radius: 10px;
@@ -96,6 +83,35 @@
 
 .filter-column .col {
   margin: 10px 0px;
+}
+
+@media only screen and (min-width: 770px) {
+  .filter-columns {
+    max-width: 1500px;
+    width: 100vw;
+  }
+
+  .filter-row {
+    width: 50%;
+    display: flex;
+    justify-content: space-around;
+  }
+}
+
+@media only screen and (max-width: 770px) {
+  .filter-columns {
+    width: 100vw;
+    flex-wrap: wrap;
+    padding: 0 30px;
+  }
+
+  .filter-row {
+    width: 100%;
+  }
+
+  .filter-column {
+    align-items: flex-start;
+  }
 }
 
 @keyframes fadeIn {
