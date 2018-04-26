@@ -1,3 +1,12 @@
+$font1: 'Montserrat', sans-serif
+
+@keyframes fadeIn
+  from { opacity: 0 }
+  to { opacity: 1 }
+
+@keyframes slideIn
+  0% { left: 400px }
+
 .favorite-courses-wrapper
   position: absolute
   z-index: 3
@@ -8,89 +17,65 @@
   width: calc(100vw - 70%)
   transition: 600ms ease-in-out
 
-.favorite-courses-wrapper.show-true
-  transform: translateX(0px) !important
+  &.show-true
+    transform: translateX(0px) !important
 
-.favorite-course
-  display: flex
-  align-items: center
-  border-bottom: 1px solid lightgrey
-  height: 120px
-  position: relative
-  left: 0px
-  animation: slideIn 1s
+  #empty
+    padding-top: 50px
+    font-family: $font3
+    font-size: 13px
+    text-align: center
 
-.favorite-course img
-  max-height: 68px
-  max-width: 100px
-  margin: 10px
+  .favorite-course
+    +flex-align(center)
+    border-bottom: 1px solid lightgrey
+    height: 120px
+    position: relative
+    left: 0px
+    animation: slideIn 1s
 
-#fav-desc
-  font-size: 11px
-  letter-spacing: .5px
-  opacity: 0.6
+    img
+      max-height: 68px
+      max-width: 100px
+      margin: 10px
 
-#fav-title
-  font-weight: bold
+    .fav-course-info
+      #fav-title
+        font-weight: bold !important
 
-#favorite-info-row
-  display: flex
+      #fav-desc
+        font-size: 11px !important
+        letter-spacing: .5px !important
+        opacity: 0.6 !important
 
-#fav-url
-  border-bottom: 3px solid #F1E01E
-  color: black
+    .overwrapper-fav-course
+      +flex(space-around, center)
+      position: absolute
+      z-index: 5
+      width: 100%
+      height: 120px
+      background-color: rgba(0, 0, 0, 0.2)
+      animation: fadeIn .3s
 
-.info-col
-  width: 60px
-  margin: 10px
-  border: 1px solid lightgrey
+      #ofc-url
+        background: lightyellow
+        border: 3px solid yellow
+        color: black
 
-.overwrapper-fav-course
-  display: flex
-  position: absolute
-  z-index: 5
-  width: 100%
-  height: 120px
-  background-color: rgba(0, 0, 0, 0.2)
-  justify-content: space-around
-  align-items: center
-  animation: fadeIn .3s
+      #ofc-rem
+        background: pink
+        border: 3px solid red
+      &:hover
+        cursor: pointer
 
-.overwrapper-fav-course p
-  display: flex
-  justify-content: center
-  align-items: center
-  height: 50px
-  padding: 10px
-  font-weight: bold
-  border-radius: 3px
-  letter-spacing: .5px
+      p
+        +flex(center,  center)
+        height: 50px
+        padding: 10px
+        font-weight: bold
+        border-radius: 3px
+        letter-spacing: .5px
 
-.overwrapper-fav-course p:hover
-  letter-spacing: 1px
-  transition: .3s
-
-#ofc-url
-  background: lightyellow
-  border: 3px solid yellow
-  color: black
-
-#ofc-rem
-  background: pink
-  border: 3px solid red
-
-#ofc-rem:hover
-  cursor: pointer
-
-#empty
-  padding-top: 50px
-  font-family: 'Montserrat', sans-serif
-  font-size: 13px
-  text-align: center
-
-@keyframes fadeIn
-  from { opacity: 0 }
-  to { opacity: 1 }
-
-@keyframes slideIn
-  0% { left: 400px }
+      &:hover
+        letter-spacing: 1px
+        transition: .3s

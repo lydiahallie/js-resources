@@ -4,7 +4,7 @@ import { Courses } from '../Courses';
 import { COURSES } from '../../data/courses';
 import { FavoriteCourses } from '../FavoriteCourses';
 import { Autocomplete, Icon } from 'react-materialize';
-// import './styles.sass';
+
 
 export class MenuBar extends Component {
   constructor() {

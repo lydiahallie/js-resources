@@ -1,5 +1,4 @@
 import React from 'react';
-// import './styles.css';
 
 class FavoriteCourse extends React.Component {
   constructor() {

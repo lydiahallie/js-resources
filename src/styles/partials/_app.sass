@@ -1,12 +1,6 @@
-@mixin flex-center()
-   display: flex
-   justify-content: center
-   align-items: center
-
-@mixin flex-end()
-  display: flex
-  justify-content: flex-end
-
+$font1: 'Lato', sans-serif
+$font2: 'Source Sans Pro', sans-serif
+$font3: 'Montserrat', sans-serif
 
 html 
   overflow-x: hidden
@@ -14,7 +8,6 @@ html
 
 #root 
   overflow-x: hidden
-
 
 body 
   margin: 0
@@ -32,194 +25,101 @@ body
   overflow-y: auto
   -webkit-overflow-scrolling: touch
 
-
-.menubar-wrapper 
+  .menubar-wrapper 
     height: 60px
     width: 100vw
-    display: flex
-    align-items: center
+    +flex(space-between, center)
     background: white
     border-bottom: 2px solid lightgrey
     z-index: 4
-    justify-content: space-between
+
+    .logo 
+      width: 300px
+
+      h1 
+        color: black
+        margin: 0
+        margin-left: 30px
+        font-family: $font2
+        font-size: 25px
+
+    .menubar-btns 
+      width: 30%
+      +flex-justify(flex-end)
+
+      .menubar-btn 
+        height: 60px
+        width: calc(100% / 3)
+        +flex(center, center)
+        border: 1px solid rgba(0, 0, 0, 0.05)
+        font-family: $font2
+        text-transform: uppercase
+
+      .search-bar 
+        +flex(center, center)
+
+        .input-field.col 
+          +flex-justify(flex-end)
+
+          .autocomplete 
+            border: none !important
+            box-shadow: none !important
+            -webkit-box-shadow: none !important
+            background-color: rgba(0, 0, 0, 0.05) !important
+            border-radius: 50px !important
+            padding-left: 60px !important
+            width: 400px !important
+
+            &.dropdown-content li > span 
+              color: rgba(0, 0, 0, 0.4)
+              font-weight: bold
+              font-family: $font3
 
 
-.menubar-btns 
-    width: 30%
-    +flex-end()
+        .autocomplete-content 
+          position: absolute !important
+          top: 60px
+          width: 400px
+            
+        .search-icon 
+          margin-left: -50px
+          color: darkgrey
+          z-index: 999
 
+    .favorites-container 
+      +flex-align(flex-end)
+      flex-direction: column
+      cursor: pointer
 
-.menubar-btn 
-    height: 60px
-    width: calc(100% / 3)
-    +flex-center()
-    border: 1px solid rgba(0, 0, 0, 0.05)
-    font-family: 'Source Sans Pro', sans-serif
-    text-transform: uppercase
+      .menubar-add 
+        font-family: $font1
+        background-color: #F1E01E
+        color: black
+        height: 60px
+        width: 200px
+        +flex(center, center)
+        font-weight: 900
+        font-size: 14px
 
+        .resources-big 
+          +flex-align(center)
+          i 
+            margin-right: 10px
+          span 
+            width: 120px
 
-.logo 
-    width: 300px
+          div #counter 
+            font-size: 10px
+            text-transform: uppercase
+            opacity: .6
+            font-family: $font1
 
-
-.logo h1 
-    color: black
-    margin-left: 30px
-
-
-.searchbar-wrapper 
-    width: calc(100vw - 300px)
-    height: 50px
-    border-bottom: 2px solid rgba(0, 0, 0, 0.1)
-
-
-.searchbar-wrapper input 
-    margin-top: 10px
-    border: 1px solid beige
-    width: 500px
-    height: 30px
-    border-radius: 10px
-    padding: 0 40px
-    margin-top: 10px
-
-
-.menubar-add 
-    font-family: 'Lato', sans-serif
-    background-color: #F1E01E
-    color: black
-    height: 60px
-    width: 200px
-    +flex-center
-    font-weight: 900
-    font-size: 14px
-
-
-.thumbnail 
-    +flex-center
-    width: 100%
-    height: 250px
-
-
-.filterpane-wrapper 
-    background: #E3E3E3
-    height: 300px
-    display: flex
-    justify-content: center
-    align-items: center
-
-
-.app-content 
+  .app-content 
     height: calc(100vh - 60px)
     overflow-y: scroll
     overflow-x: hidden
     display: flex
     flex-direction: column
-
-
-.autocomplete 
-    border: none !important
-    box-shadow: none !important
-    -webkit-box-shadow: none !important
-    background-color: rgba(0, 0, 0, 0.05) !important
-    border-radius: 50px !important
-    padding-left: 60px !important
-    width: 400px !important
-
-
-.autocomplete-content 
-    position: absolute !important
-
-
-.autocomplete-wrapper.show-false 
-    width: 0px
-    transition: .3s
-    opacity: 0
-
-
-.autocomplete-wrapper.show-true 
-    width: 200px
-    transition: .3s
-
-
-.search-phone 
-    display: flex
-    align-items: center
-
-
-.search-icon-min 
-    height: 30px
-    width: 20px
-
-
-.input-field.col 
-    +flex-end
-
-
-.search-bar 
-    +flex-end
-    align-items: center
-
-
-.search-icon 
-    margin-left: -50px
-    color: darkgrey
-    z-index: 999
-
-
-.resources-big 
-    display: flex
-    align-items: center
-
-
-.resources-big i 
-    margin-right: 10px
-
-
-.resources-big span 
-    width: 120px
-
-
-.favorite-resources 
-    background: white
-    width: 300px
-
-
-.favorites-container 
-    display: flex
-    flex-direction: column
-    align-items: flex-end
-    cursor: pointer
-
-
-.favorite-pane-wrapper.show-false 
-    position: relative
-    transform: translateX(-250px)
-
-
-.favorite-pane-wrapper.show-true 
-    position: relative
-    right: -400px
-    width: 800px
-
-
-.autocomplete-content 
-    position: relative
-    top: 60px
-    width: 400px
-
-
-.dropdown-content li>span 
-    color: rgba(0, 0, 0, 0.4)
-    font-weight: bold
-    font-family: 'Montserrat', sans-serif
-
-
-#counter 
-    font-size: 10px
-    text-transform: uppercase
-    opacity: .6
-    font-family: 'Lato', sans-serif
-
 
 @media only screen and (max-width: 1000px) 
     .autocomplete 
@@ -228,30 +128,21 @@ body
     .search-icon 
         margin-left: -80px
     
-    .search-bar.expanded-false .autocomplete 
+    .search-bar
+      &.expanded-false .autocomplete 
         width: 20% !important
     
-    .search-bar.expanded-true .autocomplete 
+      &.expanded-true .autocomplete 
         width: 100% !important
     
-
-
 @media only screen and (max-width: 800px) 
     .menubar-add 
         width: 60px
     
-
-
 @media only screen and (max-width: 600px) 
     .menubar-add 
         width: 60px
     
     .logo h1 
         font-size: 20px
-    
-
-
-@media only screen and (max-width: 770px) 
-    .filterpane-wrapper 
-        height: 600px
-    
+  

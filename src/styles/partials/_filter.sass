@@ -1,88 +1,78 @@
+$font1: 'Montserrat', sans-serif
+  
+@keyframes fadeIn
+  0% { opacity: 0 }
+  100% { opacity: 100 }
+  
 .filterpane-wrapper
   transition: .5s
-  display: flex
   flex-direction: column
-  justify-content: space-between
   overflow: hidden
   box-shadow: 1px 1px 20px 0 rgba(0, 0, 0, 0.2)
   z-index: 2
   padding: 0 40px
+  background: #E3E3E3
+  height: 300px
+  +flex(center,  center)
+
+  h5 
+    color: grey
+    font-size: 12px
+    margin: 0
+    margin-top: 3px
+    font-weight: 100
+    letter-spacing: 1px
+    animation: fadeIn .5s linear
+
+  .filter-columns
+    display: flex
+    transition: .5s
+    width: 100vw
+
+    .filter-row
+      +flex(space-around, center)
+
+      .filter-column
+        height: 130px
+        width: 200px
+        margin-top: 30px
+        +flex(space-around, center)
+        flex-direction: column
+        font-family: $font1
+
+        label
+          font-family: $font1
+
+        h6
+          font-weight: bolder
+          text-align: center
+
+        .col
+          margin: 10px 0px
+
+        .input-range__track--active, .input-range__slider
+          background: black !important
+
+        .input-range__slider
+          border-color: black !important
 
 
-.filter-columns
-  display: flex
-  transition: .5s
-  width: 100vw
+  .expand-btn
+    background-color: #E3E3E3
+    height: 23px
+    +flex(center, center)
+    width: 50px
+    border-bottom-left-radius: 10px
+    border-bottom-right-radius: 10px
+    transition: .5s
+    margin-top: 0px
+    color: #adacac
 
+  &.expanded-false
+    top: 80px
 
-.filter-column
-  height: 130px
-  width: 200px
-  margin-top: 30px
-  display: flex
-  align-items: center
-  flex-direction: column
-  justify-content: space-around
-  font-family: 'Montserrat', sans-serif
-
-
-.filter-row
-  display: flex
-  justify-content: center
-  align-items: center
-
-
-.filter-column label
-  font-family: 'Montserrat', sans-serif
-
-
-.filter-column h6
-  font-weight: bolder
-  text-align: center
-
-
-.input-range__track--active, .input-range__slider
-  background: black !important
-
-
-.input-range__slider
-  border-color: black !important
-
-
-.expand-btn
-  background-color: #E3E3E3
-  height: 23px
-  display: flex
-  justify-content: center
-  align-items: center
-  width: 50px
-  border-bottom-left-radius: 10px
-  border-bottom-right-radius: 10px
-  transition: .5s
-  margin-top: 0px
-  color: #adacac
-
-
-.expand-btn.expanded-false
-  top: 80px
-
-
-.expand-btn.expanded-true
-  top: 360px
-
-
-.filterpane-wrapper h5
-  color: grey
-  font-size: 12px
-  margin: 0
-  margin-top: 3px
-  font-weight: 100
-  letter-spacing: 1px
-  animation: fadeIn .5s linear
-
-
-.filter-column .col
-  margin: 10px 0px
+  &.expanded-true
+    top: 360px
 
 
 @media only screen and (min-width: 770px)
@@ -90,31 +80,28 @@
     max-width: 1500px
     width: 100vw
   
-
   .filter-row
     width: 50%
-    display: flex
-    justify-content: space-around
+    +flex-justify(space-around)
   
 
-
 @media only screen and (max-width: 770px)
+  .filterpane-wrapper 
+    height: 600px
+
   .filter-columns
     width: 100vw
     flex-wrap: wrap
     padding: 0 30px
   
-
   .filter-row
     width: 100%
   
-
   .filter-column
-    align-items: flex-start
-  
+    +flex-align(flex-start)
+
+    
+    
 
 
-@keyframes fadeIn
-  0% { opacity: 0 }
-  100% { opacity: 100 }
 

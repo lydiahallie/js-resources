@@ -4,8 +4,6 @@ import InputRange from 'react-input-range';
 import { Icon, Input } from 'react-materialize';
 import 'react-input-range/lib/css/index.css';
 
-// import './styles.css';
-
 const filterPaneOptions = {
   levels: ['Beginner', 'Intermediate', 'Advanced'],
   frameworks: ['React', 'Angular', 'Vue'],
