@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Icon } from 'react-materialize';
 import { COURSES } from '../../data/courses';
+import ids from 'short-id';
 
 
 const filterPaneOptions = {
@@ -13,7 +14,7 @@ const filterPaneOptions = {
 const CourseInfoBox = ({name, content}) => (
   <div className='course-info-box'>
     <h6>{name}</h6>
-    <p>{content}</p>
+    <div className='course-info-box-content'>{content}</div>
   </div>
 )
 
@@ -22,7 +23,7 @@ const CourseRating = ({rating}) => {
   return (
     <div className='rating-wrapper'>
     { arr.map(star => 
-      <div id="rating">
+      <div id="rating" key={ ids.generate() }>
         <Icon small>star</Icon>
       </div>
     )}
@@ -107,6 +108,7 @@ export class Courses extends Component  {
             <p className='empty-list'>Oh no! It doesn't seem like there are any resources that match your preferences!</p> :
             filteredCourses.map((course) => (
             <Course 
+              key={ ids.generate() }
               favoriteCourses={ favoriteCourses } 
               addFavoriteCourse={ addFavoriteCourse } 
               course={ course } />

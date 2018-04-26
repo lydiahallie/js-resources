@@ -101,6 +101,12 @@ FilterPane.propTypes = {
   types: PropTypes.array.isRequired,
   changeRangeValue: PropTypes.func.isRequired,
   handleInputChange: PropTypes.func.isRequired,
-  lengthValue: PropTypes.number.isRequired,
-  priceValue:  PropTypes.number.isRequired,
+  lengthValue: PropTypes.objectOf(PropTypes.shape({
+    min: PropTypes.number.isRequired,
+    max: PropTypes.number.isRequired,
+  })).isRequired,
+  priceValue: PropTypes.objectOf(PropTypes.shape({
+    min: PropTypes.number.isRequired,
+    max: PropTypes.number.isRequired,
+  })).isRequired,
 };

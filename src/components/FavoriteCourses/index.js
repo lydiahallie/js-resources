@@ -1,4 +1,5 @@
 import React from 'react';
+import ids from 'short-id';
 
 class FavoriteCourse extends React.Component {
   constructor() {
@@ -42,8 +43,8 @@ export const FavoriteCourses = ({favoriteCourses, addFavoriteCourse, showFavorit
   return (
     <div className={`favorite-courses-wrapper show-${showFavorites}`} style={style}>
       { activeFavorites.length ? activeFavorites.map(course => (
-        <FavoriteCourse addFavoriteCourse={addFavoriteCourse} course={course} /> )) : 
-        <p id="empty">You haven't selected any courses yet</p>
+        <FavoriteCourse key={ ids.generate() } addFavoriteCourse={addFavoriteCourse} course={course} /> )) : 
+        <p id="empty" key={ ids.generate() }>You haven't selected any courses yet</p>
       }
     </div>
   )
