@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
+import { Autocomplete, Icon } from 'react-materialize';
+import { COURSES } from '../../data/courses';
+
 import FilterPane from '../FilterPane';
 import { Courses } from '../Courses';
-import { COURSES } from '../../data/courses';
 import { FavoriteCourses } from '../FavoriteCourses';
-import { Autocomplete, Icon } from 'react-materialize';
-
 
 export class MenuBar extends Component {
   constructor() {
@@ -26,7 +26,6 @@ export class MenuBar extends Component {
 
   render() {
     const { dataSource, updateSearch, device, toggleFavorites, showFavorites, favoriteCourses } = this.props;
-    console.log('favorite courses length', favoriteCourses.size)
     return (
       <div className="menubar-wrapper">
         <div className="logo">
@@ -35,7 +34,7 @@ export class MenuBar extends Component {
         <div className={`menubar-btns device-${device}`}>
           <div className={`search-bar expanded-${this.state.showSearch}`}>
             <Autocomplete
-              data={dataSource.source}
+              data={dataSource.source || {}}
               onChange={updateSearch}
               ref={ (input) => { this.searchInput = input; } }
             />
@@ -99,7 +98,7 @@ export default class App extends Component {
     let source = {};
     COURSES.map((course) => {
       source[`${course.name}`] = course.img;
-      this.setState({ dataSource: {...this.state.dataSource, source} })
+      return this.setState({ dataSource: {...this.state.dataSource, source} })
     })
     this.updateWindowDimensions();
     window.onresize = () => this.updateWindowDimensions();
@@ -178,7 +177,6 @@ export default class App extends Component {
             lengthValue={ this.state.lengthValue }
             priceValue={ this.state.priceValue }
             searchValue={ this.state.searchValue }
-            dataSources={ this.state.dataSources }
             favoriteCourses={ this.state.favoriteCourses } /> 
         </div>
       </div>

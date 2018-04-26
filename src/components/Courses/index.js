@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Icon } from 'react-materialize';
-import { COURSES } from '../../data/courses';
 import ids from 'short-id';
+import { Icon } from 'react-materialize';
+
+import { COURSES } from '../../data/courses';
 
 
+//TODO(Lydia): Load from data.
 const filterPaneOptions = {
   levels: ['Beginner', 'Intermediate', 'Advanced'],
   frameworks: ['None', 'React', 'Angular', 'Vue'],
@@ -80,7 +82,6 @@ export class Courses extends Component  {
       lengthValue,
       priceValue,
       searchValue,
-      dataSources,
       favoriteCourses,
     } = this.props;
     const activeLevels = levels.length > 0 ? levels : filterPaneOptions.levels,
@@ -89,17 +90,15 @@ export class Courses extends Component  {
     const filteredCourses = COURSES.filter(course => {
       if (searchValue === undefined) {
         return course;
-      } else {
-        if (course.name.toLowerCase().includes(searchValue.toLowerCase()) &&
-          activeLevels.includes(course.level) &&
-          activeTypes.includes(course.type) &&
-          activeFrameworks.includes(course.framework) &&
-          priceValue.min <= course.price &&
-          priceValue.max >= course.price &&
-          lengthValue.min <= course.length &&
-          lengthValue.max >= course.length) return course;
-      }
-    })
+      } else if (course.name.toLowerCase().includes(searchValue.toLowerCase()) &&
+                activeLevels.includes(course.level) &&
+                activeTypes.includes(course.type) &&
+                activeFrameworks.includes(course.framework) &&
+                priceValue.min <= course.price &&
+                priceValue.max >= course.price &&
+                lengthValue.min <= course.length &&
+                lengthValue.max >= course.length) return course;
+    });
 
     return (
       <div className='courses-wrapper'>
@@ -123,16 +122,13 @@ Courses.propTypes = {
   levels: PropTypes.arrayOf(PropTypes.string).isRequired,
   frameworks: PropTypes.arrayOf(PropTypes.string).isRequired,
   types: PropTypes.arrayOf(PropTypes.string).isRequired,
-  lengthValue: PropTypes.objectOf(PropTypes.shape({
+  lengthValue: PropTypes.shape({
     min: PropTypes.number.isRequired,
     max: PropTypes.number.isRequired,
-  })).isRequired,
-  priceValue: PropTypes.objectOf(PropTypes.shape({
+  }).isRequired,
+  priceValue: PropTypes.shape({
     min: PropTypes.number.isRequired,
     max: PropTypes.number.isRequired,
-  })).isRequired,
+  }).isRequired,
   searchValue: PropTypes.string.isRequired,
-  dataSource: PropTypes.objectOf(PropTypes.shape({
-    source: PropTypes.object.isRequired,
-  })).isRequired,
 }

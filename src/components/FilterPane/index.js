@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import InputRange from 'react-input-range';
 import { Icon, Input } from 'react-materialize';
+import ids from 'short-id';
+import InputRange from 'react-input-range';
 import 'react-input-range/lib/css/index.css';
 
 const filterPaneOptions = {
@@ -18,22 +19,18 @@ export default class FilterPane extends Component {
     }
   }
 
-  createCheckboxes = (type) => {
-    if (type === 'levels') {
-      return filterPaneOptions.levels.map(level => (
-        <Input name='levels' type='checkbox' value={level} label={level} onChange={this.props.handleInputChange} />
-      ));
-    } else if (type === 'frameworks') {
-      return filterPaneOptions.frameworks.map(framework => (
-        <Input name='frameworks' type='checkbox' value={framework} label={framework} onChange={this.props.handleInputChange} />
-      ));
-    } else {
-      return filterPaneOptions.type.map(type => (
-        <Input name='types' type='checkbox' value={type} label={type} onChange={this.props.handleInputChange} />
-      ));
-    }
-  }
-
+  createCheckboxes = type => (
+    filterPaneOptions[`${type}`].map(listItem => (
+      <Input 
+        key={ ids.generate() } 
+        name={type} 
+        type='checkbox' 
+        value={listItem} 
+        label={listItem} 
+        onChange={e => this.props.handleInputChange(e)} />
+    ))
+  );
+  
   toggleFilterPane = () => {
     this.setState({ expanded: !this.state.expanded });
   }
@@ -101,12 +98,12 @@ FilterPane.propTypes = {
   types: PropTypes.array.isRequired,
   changeRangeValue: PropTypes.func.isRequired,
   handleInputChange: PropTypes.func.isRequired,
-  lengthValue: PropTypes.objectOf(PropTypes.shape({
+  lengthValue: PropTypes.shape({
     min: PropTypes.number.isRequired,
     max: PropTypes.number.isRequired,
-  })).isRequired,
-  priceValue: PropTypes.objectOf(PropTypes.shape({
+  }).isRequired,
+  priceValue: PropTypes.shape({
     min: PropTypes.number.isRequired,
     max: PropTypes.number.isRequired,
-  })).isRequired,
+  }).isRequired,
 };
