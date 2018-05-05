@@ -1,10 +1,14 @@
+//Dependencies
 import React, { Component } from 'react';
 import { Autocomplete, Icon } from 'react-materialize';
+import map from 'lodash/map';
+import includes from 'lodash/includes';
+//Internals
+import { Courses } from '../Courses/courses';
 import { COURSES } from '../../data/courses';
+import { FavoriteCourses } from '../FavoriteCourses/fav_courses';
+import FilterPane from '../FilterPane/filter_pane';
 
-import FilterPane from '../FilterPane';
-import { Courses } from '../Courses';
-import { FavoriteCourses } from '../FavoriteCourses';
 
 export class MenuBar extends Component {
   constructor() {
@@ -19,24 +23,31 @@ export class MenuBar extends Component {
     this.setState({ [key]: !bool });
   }
 
-  onSearchClick = () => {
-    this.toggleExpand('showSearch', this.state.showSearch);
-    this.searchInput.updateSearch();
-  }
+  // onSearchClick = e => {
+  //   this.toggleExpand('showSearch', this.state.showSearch);
+  //   this.searchInput._onChange(e, value);
+  // }
 
   render() {
-    const { dataSource, updateSearch, device, toggleFavorites, showFavorites, favoriteCourses } = this.props;
+    const { 
+      dataSource, 
+      updateSearch, 
+      device, 
+      toggleFavorites,  
+      showFavorites, 
+      favoriteCourses } = this.props;
+
     return (
-      <div className="menubar-wrapper">
-        <div className="logo">
+      <div className='menubar-wrapper'>
+        <div className='logo'>
           <h1>JavaScript { device === 'phone' && <br /> } Resources</h1>
         </div> 
         <div className={`menubar-btns device-${device}`}>
           <div className={`search-bar expanded-${this.state.showSearch}`}>
             <Autocomplete
               data={dataSource.source || {}}
-              onChange={updateSearch}
-              ref={ (input) => { this.searchInput = input; } }
+              onChange={ e => this.onSearchClick(e) }
+              ref={ (input) => { this.searchInput = input } }
             />
             <Icon className='search-icon' small onClick={ () => this.onSearchClick() }>search</Icon>
           </div>
@@ -48,7 +59,7 @@ export class MenuBar extends Component {
               <Icon small>star</Icon>
               <div>
                 <span>{showFavorites ? 'Hide' : 'Show'} Resources</span>
-                <div id="counter">{`${favoriteCourses.size} selected`}</div>
+                <div id='counter'>{`${favoriteCourses.size} selected`}</div>
               </div>
             </div> : 
             <Icon small>star</Icon> }
@@ -66,6 +77,11 @@ export default class App extends Component {
       levels: [],
       frameworks: [],
       types: [],
+      filterPaneOptions: {
+        levels: [],
+        frameworks: [],
+        types: [],
+      },
       lengthValue: { min: 0, max: 100 },
       priceValue:  { min: 0, max: 500 },
       searchValue: '',
@@ -83,9 +99,9 @@ export default class App extends Component {
       name === 'levels' ? this.state.levels :
       name === 'frameworks' ? this.state.frameworks :
       name === 'types' ? this.state.types :
-      null 
+      null; 
 
-    if (state.includes(event.target.value)) {
+    if (includes(state, event.target.value)) {
       let deleteIndex = state.indexOf(event.target.value);
       state.splice(deleteIndex, 1);
       this.setState({ [name]: state });
@@ -95,17 +111,29 @@ export default class App extends Component {
   }
 
   componentDidMount() {
+    const { levels, frameworks, type } = this.state;
     let source = {};
-    COURSES.map((course) => {
-      source[`${course.name}`] = course.img;
-      return this.setState({ dataSource: {...this.state.dataSource, source} })
-    })
+    {map(COURSES, (course) => {
+      this.addToOptions(course, ['levels', 'frameworks', 'types']);
+      source[course.name] = course.img;
+      return this.setState({ dataSource: {...this.state.dataSource, source} });
+    })}
     this.updateWindowDimensions();
     window.onresize = () => this.updateWindowDimensions();
   }
 
+  addToOptions = (course, arr) => {
+    const { filterPaneOptions } = this.state;
+    map(arr, item => {
+      if (!includes(filterPaneOptions[item], (course[item.slice(0, -1)]))) {
+        filterPaneOptions[item] = [...filterPaneOptions[item], course[item.slice(0, -1)]];
+      }
+    });
+    this.setState({ filterPaneOptions });
+  }
+
   changeRangeValue = (name, value) => {
-    this.setState({ [name]: value })
+    this.setState({ [name]: value });
   }
 
   updateSearch = (event) => {
@@ -132,16 +160,16 @@ export default class App extends Component {
   addFavoriteCourse = (course) => {
     const { favoriteCourses } = this.state;
     if (favoriteCourses.has(course)) {
-      favoriteCourses.delete(course)
-      this.setState({ favoriteCourses })
+      favoriteCourses.delete(course);
+      this.setState({ favoriteCourses });
     } else {
-      favoriteCourses.add(course)
+      favoriteCourses.add(course);
       this.setState({ favoriteCourses });
     }
   }
 
   toggleFavorites = () => {
-    this.setState({ showFavorites: !this.state.showFavorites })
+    this.setState({ showFavorites: !this.state.showFavorites });
   }
 
   render() {
@@ -159,7 +187,7 @@ export default class App extends Component {
             showFavorites={this.state.showFavorites} 
             favoriteCourses={ this.state.favoriteCourses }
             device={ this.state.device }
-            addFavoriteCourse={this.addFavoriteCourse} />
+            addFavoriteCourse={ this.addFavoriteCourse } />
           <FilterPane 
             device={ this.state.device }
             levels={ this.state.levels }
@@ -168,15 +196,17 @@ export default class App extends Component {
             lengthValue={ this.state.lengthValue }
             changeRangeValue={ this.changeRangeValue }
             handleInputChange={ this.handleInputChange }
+            filterPaneOptions={ this.state.filterPaneOptions }
             priceValue={ this.state.priceValue } />
           <Courses 
-            addFavoriteCourse={this.addFavoriteCourse}
+            addFavoriteCourse={ this.addFavoriteCourse }
             levels={ this.state.levels }
             frameworks={ this.state.frameworks }
             types={ this.state.types }
             lengthValue={ this.state.lengthValue }
             priceValue={ this.state.priceValue }
             searchValue={ this.state.searchValue }
+            filterPaneOptions={ this.state.filterPaneOptions }
             favoriteCourses={ this.state.favoriteCourses } /> 
         </div>
       </div>

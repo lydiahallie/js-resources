@@ -1,36 +1,32 @@
+//Dependencies
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import ids from 'short-id';
 import { Icon } from 'react-materialize';
-
+import map from 'lodash/map';
+import includes from 'lodash/includes';
+import filter from 'lodash/filter';
+//Internals
 import { COURSES } from '../../data/courses';
-
-
-//TODO(Lydia): Load from data.
-const filterPaneOptions = {
-  levels: ['Beginner', 'Intermediate', 'Advanced'],
-  frameworks: ['None', 'React', 'Angular', 'Vue'],
-  type: ['Online', 'Book', 'Podcast'],
-};
 
 const CourseInfoBox = ({name, content}) => (
   <div className='course-info-box'>
     <h6>{name}</h6>
     <div className='course-info-box-content'>{content}</div>
   </div>
-)
+);
 
 const CourseRating = ({rating}) => {
   let arr = new Array(rating).fill(0);
   return (
     <div className='rating-wrapper'>
-    { arr.map(star => 
-      <div id="rating" key={ ids.generate() }>
+    {map(arr, (star) => 
+      <div id='rating' key={ ids.generate() }>
         <Icon small>star</Icon>
       </div>
     )}
     </div>
-  )
+  );
 }
 
 const CourseInfoRow = ({first, course}) => {
@@ -68,9 +64,9 @@ const Course = ({favoriteCourses, course, addFavoriteCourse}) => (
         <CourseInfoRow course={course} />
       </div>
     </div>
-    <a href={course.url} target="_blank"><button className='course-link'>Go To Resource</button></a>
+    <a href={course.url} target='_blank'><button className='course-link'>Go To Resource</button></a>
   </div>
-)
+);
 
 export class Courses extends Component  {
   render() {
@@ -83,17 +79,18 @@ export class Courses extends Component  {
       priceValue,
       searchValue,
       favoriteCourses,
+      filterPaneOptions,
     } = this.props;
     const activeLevels = levels.length > 0 ? levels : filterPaneOptions.levels,
-          activeTypes = types.length > 0 ? types : filterPaneOptions.type,
+          activeTypes = types.length > 0 ? types : filterPaneOptions.types,
           activeFrameworks = frameworks.length > 0 ? frameworks : filterPaneOptions.frameworks;
-    const filteredCourses = COURSES.filter(course => {
+    const filteredCourses = filter(COURSES, course => {
       if (searchValue === undefined) {
         return course;
-      } else if (course.name.toLowerCase().includes(searchValue.toLowerCase()) &&
-                activeLevels.includes(course.level) &&
-                activeTypes.includes(course.type) &&
-                activeFrameworks.includes(course.framework) &&
+      } else if (includes(course.name.toLowerCase(), searchValue.toLowerCase()) &&
+                includes(activeLevels, course.level) &&
+                includes(activeTypes, course.type) &&
+                includes(activeFrameworks, course.framework) &&
                 priceValue.min <= course.price &&
                 priceValue.max >= course.price &&
                 lengthValue.min <= course.length &&
@@ -105,13 +102,14 @@ export class Courses extends Component  {
         <div className='courses-list'>
           { !filteredCourses.length ? 
             <p className='empty-list'>Oh no! It doesn't seem like there are any resources that match your preferences!</p> :
-            filteredCourses.map((course) => (
-            <Course 
-              key={ ids.generate() }
-              favoriteCourses={ favoriteCourses } 
-              addFavoriteCourse={ addFavoriteCourse } 
-              course={ course } />
-          )) }
+            map(filteredCourses, (course) => (
+              <Course 
+                key={ ids.generate() }
+                favoriteCourses={ favoriteCourses } 
+                addFavoriteCourse={ addFavoriteCourse } 
+                course={ course } /> 
+            ))
+          }
         </div>
       </div>
     );
